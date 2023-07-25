@@ -14,11 +14,13 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
 // 4. Retrieve the Pinecone index
   const index = client.Index(indexName);
 // 5. Create query embedding
-  const queryEmbedding = await new OpenAIEmbeddings().embedQuery(question);
+  const queryEmbedding = await new OpenAIEmbeddings(
+    {openAIApiKey: process.env.OPEN_API_KEY}
+  ).embedQuery(question);
 // 6. Query Pinecone index and return top 10 matches
   let queryResponse = await index.query({
     queryRequest: {
-      topK: 10,
+      topK: 4,
       vector: queryEmbedding,
       includeMetadata: true,
       includeValues: true,
@@ -30,7 +32,9 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
   console.log(`Asking question: ${question}...`);
   if (queryResponse.matches.length) {
 // 9. Create an OpenAI instance and load the QAStuffChain
-    const llm = new OpenAI({});
+    const llm = new OpenAI({
+      openAIApiKey: process.env.OPEN_API_KEY
+    });
     const chain = loadQAStuffChain(llm);
 // 10. Extract and concatenate page content from matched documents
     const concatenatedPageContent = queryResponse.matches
