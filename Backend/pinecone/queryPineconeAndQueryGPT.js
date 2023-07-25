@@ -40,10 +40,16 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
     const concatenatedPageContent = queryResponse.matches
       .map((match) => match.metadata.pageContent)
       .join(" ");
+      
 // 11. Execute the chain with input documents and question
+    const temperature = 0.7;
+    const maxTokens = 100;
+
     const result = await chain.call({
       input_documents: [new Document({ pageContent: concatenatedPageContent })],
       question: question,
+      temperature,
+      max_tokens: maxTokens,
     });
 // 12. Log the answer
     console.log(`Answer: ${result.text}`);

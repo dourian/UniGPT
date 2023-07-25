@@ -13,7 +13,7 @@ const loader = new DirectoryLoader("./documents", {
 });
 const docs = await loader.load();
 // 8. Set up variables for the filename, question, and index settings
-const question = "What is the course ID of CS499";
+const question = "Tell me about foundations of sequential programs? Include the prerequisites, corequisites, and antirequisites, and the course ID.";
 const indexName = "unigpt";
 const vectorDimension = 1536;
 // 9. Initialize Pinecone client with API key and environment
@@ -27,7 +27,7 @@ await client.init({
 // 11. Check if Pinecone index exists and create if necessary
   await createPineconeIndex(client, indexName, vectorDimension);
 // 12. Update Pinecone vector store with document embeddings
-  // await updatePinecone(client, indexName, docs);
+  await updatePinecone(client, indexName, docs);
 // 13. Query Pinecone vector store and GPT model for an answer
   await queryPineconeVectorStoreAndQueryLLM(client, indexName, question);
 })();
