@@ -7,3 +7,6 @@
 
 # environment
 .env
+
+#other
+.DS_Store
