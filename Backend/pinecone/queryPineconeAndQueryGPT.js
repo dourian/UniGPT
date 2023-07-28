@@ -10,7 +10,7 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
   question
 ) => {
 // 3. Start query process
-  console.log("Querying Pinecone vector store...");
+  // console.log("Querying Pinecone vector store...");
 // 4. Retrieve the Pinecone index
   const index = client.Index(indexName);
 // 5. Create query embedding
@@ -27,9 +27,9 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
     },
   });
 // 7. Log the number of matches 
-  console.log(`Found ${queryResponse.matches.length} matches...`);
+  // console.log(`Found ${queryResponse.matches.length} matches...`);
 // 8. Log the question being asked
-  console.log(`Asking question: ${question}...`);
+  // console.log(`Asking question: ${question}...`);
   if (queryResponse.matches.length) {
 // 9. Create an OpenAI instance and load the QAStuffChain
     const llm = new OpenAI({
@@ -52,9 +52,11 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
       max_tokens: maxTokens,
     });
 // 12. Log the answer
-    console.log(`Answer: ${result.text}`);
+    // console.log(`Answer: ${result.text}`);
+    return result.text;
   } else {
 // 13. Log that there are no matches, so GPT-3 will not be queried
-    console.log("Since there are no matches, GPT-3 will not be queried.");
+    // console.log("Since there are no matches, GPT-3 will not be queried.");
+    return "Since there are no matches, GPT-3 will not be queried.";
   }
 };
