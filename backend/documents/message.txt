@@ -6,6 +6,25 @@ Notes
 The phrase "Computer Science students" refers to students enrolled in any honours plan offered through the David R. Cheriton School of Computer Science. Software Engineering, Computing and Financial Management, and Bachelor of Computer Science (Data Science) students are considered Computer Science students. Students enrolled in the BMath (Data Science) plan are not considered Computer Science students. Due to course restrictions on upper-year courses, students pursuing a Computer Science Minor may need to enrol as Computer Science students for part of their undergraduate studies and should contact a computer science (CS) advisor for more information.
 A CS course may not be taken for credit if it is the prerequisite of another CS course that has already been passed.
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+This text file is formatted in the following:
+1. each cousre is separated by a blank line
+2. each course title is followed by LEC or LAB or TST or TUT. If there is more than one, they are separated by commas.
+3. LEC stands for lecture.
+4. LAB stands for lab.
+5. TST stands for test.
+6. TUT stands for tutorial.
+7. it is then followed by a number, which is the number of units for the course.
+8. it is then followed by a course ID
+9. it is then followed by a course title
+10. it is then followed by a course description
+11. it is then followed by a prerequisite
+12. it is then followed by an antirequisite
+13. it is then followed by an offering
+14. it is then followed by a note
+15. when there is a blank line, that reaches the end of the information for a course.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 CS 100s
 
 CS 100 LEC 0.50

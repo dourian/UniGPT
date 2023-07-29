@@ -52,7 +52,7 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
       .join(" ");
       
 // 11. Execute the chain with input documents and question
-    const temperature = 0.7;
+    const temperature = 1;
     const maxTokens = 100;
 
     const result = await chain.call({
