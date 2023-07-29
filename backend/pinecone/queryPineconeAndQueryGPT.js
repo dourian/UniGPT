@@ -3,11 +3,13 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { OpenAI } from "langchain/llms/openai";
 import { loadQAStuffChain } from "langchain/chains";
 import { Document } from "langchain/document";
+import { streamAnswerGPT } from "../controller/streamanswer.js";
 // 2. Export the queryPineconeVectorStoreAndQueryLLM function
 export const queryPineconeVectorStoreAndQueryLLM = async (
   client,
   indexName,
-  question
+  question,
+  response
 ) => {
 // 3. Start query process
   // console.log("Querying Pinecone vector store...");
@@ -33,8 +35,16 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
   if (queryResponse.matches.length) {
 // 9. Create an OpenAI instance and load the QAStuffChain
     const llm = new OpenAI({
-      openAIApiKey: process.env.OPEN_API_KEY
+      openAIApiKey: process.env.OPEN_API_KEY,
+      streaming: true
     });
+    llm.callbacks = [
+      {handleLLMNewToken(token) {
+        console.log(token)
+        streamAnswerGPT(response, token)
+      },
+    }
+    ]
     const chain = loadQAStuffChain(llm);
 // 10. Extract and concatenate page content from matched documents
     const concatenatedPageContent = queryResponse.matches
@@ -61,3 +71,4 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
     return "Since there are no matches, GPT-3 will not be queried.";
   }
 };
+

@@ -37,9 +37,9 @@ await client.init({
 // })();
 
 
-function generateAnswer (question) {
-  return queryPineconeVectorStoreAndQueryLLM(client, indexName, question);
+export function generateAnswer (question, response) {
+  return queryPineconeVectorStoreAndQueryLLM(client, indexName, question, response);
 }
 
-export {generateAnswer};
+generateAnswer("What is CS105?")
 
