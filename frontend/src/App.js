@@ -1,22 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import React, { useState, useContext } from 'react';
+import { BackendContext } from "./BackendProvider";
 function App() {
+
+  const [inputValue, setInputValue] = useState('');
+
+  const { 
+    getAnswer,
+    setAnswer,
+    answer
+ } = useContext(BackendContext);
+  
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    getAnswer(inputValue);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <form onSubmit={handleSubmit}>
+          <label>
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+          </label>
+          <button type="submit">Submit</button>
+      </form>
       </header>
     </div>
   );
