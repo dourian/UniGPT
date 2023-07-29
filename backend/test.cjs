@@ -5,7 +5,7 @@ app.use(cors());
 
 import('./main.js').then(({ generateAnswer }) => {
 
-  app.get('/', async (req, res) => {
+  app.get('/hello', async (req, res) => {
     //console.log("in backend: ", req.params.question);
     const question = "Tell me about foundations of sequential programs? Include the prerequisites, corequisites, and antirequisites, and the course ID."
     const answer = await generateAnswer(question);
