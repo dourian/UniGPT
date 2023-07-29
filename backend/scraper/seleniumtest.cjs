@@ -64,13 +64,13 @@ async function scrapePage(url) {
   const filename = generateUniqueFilename(url);
 
   // Save the page text to a text file with the unique filename
-  fs.writeFileSync(filename, pageText);
+  fs.writeFileSync("../documents/"+filename, pageText);
 
   // Recursively find and click on other links
-  const linkElements = await driver.findElements(By.tagName("a"));
+  const linkElements = await driver.findElements(By.css("a"));
   for (const linkElement of linkElements) {
     const linkHref = await linkElement.getAttribute("href");
-    if (linkHref && linkHref.startsWith("http")) {
+    if (linkHref?.startsWith("http")) {
       await scrapePage(linkHref);
     }
   }
