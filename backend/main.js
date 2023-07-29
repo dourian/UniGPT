@@ -8,7 +8,6 @@ import { createPineconeIndex } from "./pinecone/createPineconeIndex.js";
 import { updatePinecone } from "./pinecone/updatePinecone.js";
 import { queryPineconeVectorStoreAndQueryLLM } from "./pinecone/queryPineconeAndQueryGPT.js";
 import * as dotenv from "dotenv";
-import init from "./pinecone/initPinecone.js"
 
 dotenv.config();
 
