@@ -1,13 +1,11 @@
-
-
-
-import { PineconeClient } from "@pinecone-database/pinecone";
 import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
+import { PineconeClient } from "@pinecone-database/pinecone";
 import { TextLoader } from "langchain/document_loaders/fs/text";
-import { createPineconeIndex } from "./pinecone/createPineconeIndex.js";
-import { updatePinecone } from "./pinecone/updatePinecone.js";
-import { queryPineconeVectorStoreAndQueryLLM } from "./pinecone/queryPineconeAndQueryGPT.js";
 import * as dotenv from "dotenv";
+
+import { createPineconeIndex } from "./pinecone/createPineconeIndex.js";
+import { queryPineconeVectorStoreAndQueryLLM } from "./pinecone/queryPineconeAndQueryGPT.js";
+import { updatePinecone } from "./pinecone/updatePinecone.js";
 
 dotenv.config();
 

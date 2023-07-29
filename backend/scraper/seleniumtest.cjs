@@ -1,6 +1,7 @@
-const fs = require("fs");
 const crypto = require("crypto");
+const fs = require("fs");
 const webdriver = require("selenium-webdriver"),
+
   By = webdriver.By,
   until = webdriver.until;
 
