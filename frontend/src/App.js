@@ -1,16 +1,11 @@
 import "./App.css";
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext } from "react";
 import { BackendContext } from "./BackendProvider";
+
 function App() {
+  const [inputValue, setInputValue] = useState("");
 
-  const [inputValue, setInputValue] = useState('');
-
-  const { 
-    getAnswer,
-    setAnswer,
-    answer
- } = useContext(BackendContext);
-  
+  const { getAnswer, setAnswer, answer } = useContext(BackendContext);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -22,8 +17,8 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="text-center">
+      <header className="app-container">
         <form onSubmit={handleSubmit}>
           <label>
             <input
@@ -33,7 +28,7 @@ function App() {
             />
           </label>
           <button type="submit">Submit</button>
-      </form>
+        </form>
       </header>
     </div>
   );
