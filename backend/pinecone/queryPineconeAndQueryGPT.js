@@ -1,9 +1,13 @@
-import { Document } from "langchain/document";
-import { loadQAStuffChain } from "langchain/chains";
-import { OpenAI } from "langchain/llms/openai";
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+// import { Document } from "langchain/document";
+// import { loadQAStuffChain } from "langchain/chains";
+// import { OpenAI } from "langchain/llms/openai";
+// import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 
-import { streamAnswerGPT } from "../controller/streamanswer.js";
+// import { streamAnswerGPT } from "../controller/streamanswer.js";
+const Document = require("langchain/document")
+const loadQAStuffChain = require("langchain/chains")
+const OpenAI = require("langchain/llms/openai")
+const streamAnswerGPT = require("../controller/streamanswer.js")
 
 export const queryPineconeVectorStoreAndQueryLLM = async (
   client,

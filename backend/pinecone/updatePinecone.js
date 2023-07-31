@@ -1,7 +1,10 @@
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+// import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+// import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
-export const updatePinecone = async (client, indexName, docs) => {
+const OpenAIEmbeddings = require("langchain/embeddings/openai")
+const RecursiveCharacterTextSplitter = require("langchain/text_splitter")
+
+const updatePinecone = async (client, indexName, docs) => {
   console.log("Retrieving Pinecone index...");
 
   const index = client.Index(indexName);
@@ -64,3 +67,5 @@ export const updatePinecone = async (client, indexName, docs) => {
     console.log(`Pinecone index updated with ${chunks.length} vectors`);
   }
 };
+
+module.exports = updatePinecone

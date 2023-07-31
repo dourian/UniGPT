@@ -24,9 +24,6 @@ app.get('/', async (req, res) => {
   res.setHeader('Transfer-Encoding', 'chunked');
   for (let i = 0; i < 10; i++) {
     res.write("hi")
-    setTimeout(function () {
-      console.log("writing")
-    }, 1000)
   }
   
   // import("./streamanswer.js").then(({streamAnswerGPT}) => {
