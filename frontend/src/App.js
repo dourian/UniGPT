@@ -1,6 +1,6 @@
-import "./App.css";
 import React, { useState, useContext } from "react";
 import { BackendContext } from "./BackendProvider";
+import{ BsSearch } from "react-icons/bs"
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -17,19 +17,25 @@ function App() {
   };
 
   return (
-    <div className="text-center">
-      <header className="app-container">
-        <form onSubmit={handleSubmit}>
+    <div className="w-full h-[100vh] text-center overflow-y-hidden flex justify-center items-center">
+      <div className="w-full">
+        <h1 className="font-bold text-5xl">UniGPT</h1>
+        <h3 >A GPT model trained on <span className="text-[#C0AD00]">Waterloo</span></h3>
+        <form 
+          onSubmit={handleSubmit}>
+          <button className="bg-black text-white text-sm rounded-lg px-4 py-2 mt-[100px]" type="submit">Start</button>
           <label>
             <input
+              className="border-[2px] rounded-lg w-1/2 mx-4 p-1"
               type="text"
               value={inputValue}
               onChange={handleInputChange}
+              placeholder={"Tell me about the University of Waterloo"}
             />
           </label>
-          <button type="submit">Submit</button>
         </form>
-      </header>
+
+      </div>
     </div>
   );
 }
