@@ -11,11 +11,10 @@ const DirectoryLoader = require("langchain/document_loaders/fs/directory")
 const PineconeClient = require("@pinecone-database/pinecone")
 const TextLoader = require("langchain/document_loaders/fs/text")
 const createPineconeIndex = require("./pinecone/createPineconeIndex.js")
-const queryPineconeVectorStoreAndQueryLLM = require("./pinecone/createPineconeIndex.js")
+const queryPineconeVectorStoreAndQueryLLM = require("./pinecone/queryPineconeAndQueryGPT.js")
 const updatePinecone = require("./pinecone/updatePinecone.js")
 
 require('dotenv').config()
-
 
 async function init() {
   const loader = new DirectoryLoader("./documents", {

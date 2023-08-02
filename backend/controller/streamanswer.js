@@ -1,6 +1,5 @@
 
-
-export function streamAnswerGPT(res, token) {
+function streamAnswerGPT(res, token) {
     res.write("hi", 'utf8', () => {
         console.log("Writing string Data...");
     });
@@ -9,3 +8,4 @@ export function streamAnswerGPT(res, token) {
     }, 1000)
 }
 
+module.exports = streamAnswerGPT

@@ -9,7 +9,7 @@ const loadQAStuffChain = require("langchain/chains")
 const OpenAI = require("langchain/llms/openai")
 const streamAnswerGPT = require("../controller/streamanswer.js")
 
-export const queryPineconeVectorStoreAndQueryLLM = async (
+const queryPineconeVectorStoreAndQueryLLM = async (
   client,
   indexName,
   question,
@@ -64,3 +64,5 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
     return "Since there are no matches, GPT-3 will not be queried.";
   }
 };
+
+module.exports = queryPineconeVectorStoreAndQueryLLM
