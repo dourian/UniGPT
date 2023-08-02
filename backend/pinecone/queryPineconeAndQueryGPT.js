@@ -4,6 +4,7 @@
 // import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 
 // import { streamAnswerGPT } from "../controller/streamanswer.js";
+const OpenAIEmbeddings = require("langchain/embeddings/openai")
 const Document = require("langchain/document")
 const loadQAStuffChain = require("langchain/chains")
 const OpenAI = require("langchain/llms/openai")
