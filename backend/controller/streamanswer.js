@@ -1,11 +1,15 @@
-
+/**
+ * Streams the answer to the endpoint
+ * 
+ * @param {*} res The response object of express route
+ * @param {*} token LLM token to be written to data
+ */
 function streamAnswerGPT(res, token) {
-    res.write("hi", 'utf8', () => {
-        console.log("Writing string Data...");
+    res.write(token, 'utf8', () => {
     });
     setTimeout(function () {
         streamAnswerGPT(res, token);
     }, 1000)
 }
 
-module.exports = streamAnswerGPT
+export default streamAnswerGPT

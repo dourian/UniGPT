@@ -1,9 +1,13 @@
-// import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-// import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
-const OpenAIEmbeddings = require("langchain/embeddings/openai")
-const RecursiveCharacterTextSplitter = require("langchain/text_splitter")
-
+/**
+ * Updates the Pinecone database index by creating new embeddings and uploading them to Pinecone database
+ * 
+ * @param {PineConeClient} client Pinecone client
+ * @param {string} indexName Name of Pinecone Index
+ * @param {DirectoryLoader} docs DirectoryLoader of the folder of documents with .txt files
+ */
 const updatePinecone = async (client, indexName, docs) => {
   console.log("Retrieving Pinecone index...");
 
@@ -11,6 +15,7 @@ const updatePinecone = async (client, indexName, docs) => {
 
   console.log(`Pinecone index retrieved: ${indexName}`);
 
+  // load docs
   for (const doc of docs) {
     console.log(`Processing document: ${doc.metadata.source}`);
     const txtPath = doc.metadata.source;
@@ -27,6 +32,7 @@ const updatePinecone = async (client, indexName, docs) => {
       `Calling OpenAI's Embedding endpoint documents with ${chunks.length} text chunks ...`
     );
 
+    // create embeddings
     const embeddingsArrays = await new OpenAIEmbeddings({
       openAIApiKey: process.env.OPEN_API_KEY,
     }).embedDocuments(
@@ -37,6 +43,7 @@ const updatePinecone = async (client, indexName, docs) => {
       `Creating ${chunks.length} vectors array with id, values, and metadata...`
     );
 
+    // upload embeddings
     const batchSize = 100;
     let batch = [];
     for (let idx = 0; idx < chunks.length; idx++) {
@@ -68,4 +75,4 @@ const updatePinecone = async (client, indexName, docs) => {
   }
 };
 
-module.exports = updatePinecone
+export default updatePinecone

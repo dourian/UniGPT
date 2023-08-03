@@ -1,3 +1,10 @@
+/**
+ * Creates Pinecone Index if not already created
+ * 
+ * @param {PineConeClient} client Pinecone client
+ * @param {string} indexName Name of Pinecone index
+ * @param {int} vectorDimension Dimension of Pinecone database
+ */
 const createPineconeIndex = async (
   client,
   indexName,
@@ -25,4 +32,4 @@ const createPineconeIndex = async (
   }
 };
 
-module.exports = createPineconeIndex
+export default createPineconeIndex

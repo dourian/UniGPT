@@ -1,20 +1,26 @@
-// import { Document } from "langchain/document";
-// import { loadQAStuffChain } from "langchain/chains";
-// import { OpenAI } from "langchain/llms/openai";
-// import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { Document } from "langchain/document";
+import { loadQAStuffChain } from "langchain/chains";
+import { OpenAI } from "langchain/llms/openai";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 
-// import { streamAnswerGPT } from "../controller/streamanswer.js";
-const OpenAIEmbeddings = require("langchain/embeddings/openai")
-const Document = require("langchain/document")
-const loadQAStuffChain = require("langchain/chains")
-const OpenAI = require("langchain/llms/openai")
-const streamAnswerGPT = require("../controller/streamanswer.js")
+import streamAnswerGPT from "../controller/streamanswer.js";
 
+/**
+ * Queries the Pinecone database for the nearest matches and returns as a string
+ * 
+ * @param {PineConeClient} client Pinecone Client
+ * @param {string} indexName Name of the Pinecone index
+ * @param {string} question The question to be queried
+ * @param {*} response Response object from express route
+ * @param {boolean} streamTrue True: want streaming, False: no streaming
+ * @returns answer to queried quesion
+ */
 const queryPineconeVectorStoreAndQueryLLM = async (
   client,
   indexName,
   question,
-  response
+  response,
+  streamTrue
 ) => {
   const index = client.Index(indexName);
 
@@ -36,14 +42,18 @@ const queryPineconeVectorStoreAndQueryLLM = async (
       openAIApiKey: process.env.OPEN_API_KEY,
       streaming: true,
     });
-    llm.callbacks = [
-      {
-        handleLLMNewToken(token) {
-          console.log(token);
-          streamAnswerGPT(response, token);
+
+    if (streamTrue) {
+      llm.callbacks = [
+        {
+          handleLLMNewToken(token) {
+            console.log(token);
+            streamAnswerGPT(response, token);
+          },
         },
-      },
-    ];
+      ];
+    }
+
     const chain = loadQAStuffChain(llm);
 
     const concatenatedPageContent = queryResponse.matches
@@ -66,4 +76,4 @@ const queryPineconeVectorStoreAndQueryLLM = async (
   }
 };
 
-module.exports = queryPineconeVectorStoreAndQueryLLM
+export default queryPineconeVectorStoreAndQueryLLM
