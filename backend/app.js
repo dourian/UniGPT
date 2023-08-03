@@ -27,6 +27,11 @@ async function initPinecone() {
   });
 }
 
+// default
+app.get('/', (req, res) => {
+    res.send("Welcome to UniGPT!")
+});
+
 // ask question route
 app.get('/ask', jsonParser, async (req, res) => {
   try {
