@@ -45,12 +45,16 @@ app.get('/ask', jsonParser, async (req, res) => {
       res.send("Data is not in the right format, try again.")
     }
 
+    const useStream = true;
+
     // query and send answer
-    const answer = await queryQuestion(pclient, indexName, question, res, false)
-    res.send(answer);
-    
+    const answer = await queryQuestion(pclient, indexName, question, res, useStream)
+
+    if (!useStream) res.send(answer);
+
+    res.end();
   } catch {
-    res.send("Somethign went wrong")
+    res.send("Something went wrong")
   }
   
 });

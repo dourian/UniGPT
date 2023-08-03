@@ -10,3 +10,6 @@
 
 #other
 .DS_Store
+
+# local files
+./documents/*
