@@ -10,6 +10,7 @@ const createPineconeIndex = async (
   indexName,
   vectorDimension
 ) => {
+  // check for existing index
   console.log(`Checking "${indexName}"...`);
   const existingIndexes = await client.listIndexes();
 
@@ -24,6 +25,7 @@ const createPineconeIndex = async (
       },
     });
 
+    // create index with client
     console.log(`Created with client:`, createClient);
 
     await new Promise((resolve) => setTimeout(resolve, 60000));

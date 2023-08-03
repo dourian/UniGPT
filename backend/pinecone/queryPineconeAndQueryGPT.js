@@ -24,10 +24,12 @@ const queryPineconeVectorStoreAndQueryLLM = async (
 ) => {
   const index = client.Index(indexName);
 
+  // create embeddings
   const queryEmbedding = await new OpenAIEmbeddings({
     openAIApiKey: process.env.OPEN_API_KEY,
   }).embedQuery(question);
 
+  // query question
   let queryResponse = await index.query({
     queryRequest: {
       topK: 4,
@@ -37,12 +39,14 @@ const queryPineconeVectorStoreAndQueryLLM = async (
     },
   });
 
+  // match query to answer
   if (queryResponse.matches.length) {
     const llm = new OpenAI({
       openAIApiKey: process.env.OPEN_API_KEY,
       streaming: true,
     });
 
+    // STREAMING CALLBACKS, UNDER WORK RIGHT NOW!!
     if (streamTrue) {
       llm.callbacks = [
         {
@@ -63,6 +67,7 @@ const queryPineconeVectorStoreAndQueryLLM = async (
     const temperature = 1;
     const maxTokens = 100;
 
+    // query the chain
     const result = await chain.call({
       input_documents: [new Document({ pageContent: concatenatedPageContent })],
       question: question,
