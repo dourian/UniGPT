@@ -1,10 +1,12 @@
 import {PineconeClient} from "@pinecone-database/pinecone"
 import express from 'express'
+import bodyParser from "body-parser"
 import cors from 'cors'
 import queryQuestion from "./pinecone/queryPineconeAndQueryGPT.js"
 import * as dotenv from "dotenv";
 
 const app = express();
+const jsonParser = bodyParser.json()
 
 // configs for express
 dotenv.config();
@@ -20,22 +22,37 @@ let pclient = new PineconeClient();
 async function initPinecone() {
   pclient = new PineconeClient();
   await pclient.init({
-    projectName: "unigpt",
     apiKey: process.env.PINECONE_API_KEY,
     environment: process.env.PINECONE_ENVIRONMENT,
   });
 }
 
 // ask question route
-app.get('/ask', async (req, res) => {
-  initPinecone()
-  await pclient.init({
-    apiKey: process.env.PINECONE_API_KEY,
-    environment: process.env.PINECONE_ENVIRONMENT,
-  });
-  const question = "Tell me about foundations of sequential programs? Include the prerequisites, corequisites, and antirequisites, and the course ID."
-  const answer = await queryQuestion(pclient, indexName, question, res, true)
-  res.send(answer);
+app.get('/ask', jsonParser, async (req, res) => {
+  try {
+    // init pinecone client
+    initPinecone()
+    await pclient.init({
+      apiKey: process.env.PINECONE_API_KEY,
+      environment: process.env.PINECONE_ENVIRONMENT,
+    });
+
+    // fetch data from json
+    const question = req.body.question || ""
+
+    // handle empty question
+    if (question === "" || question === null) {
+      res.send("Data is not in the right format, try again.")
+    }
+
+    // query and send answer
+    const answer = await queryQuestion(pclient, indexName, question, res, false)
+    res.send(answer);
+    
+  } catch {
+    res.send("Somethign went wrong")
+  }
+  
 });
 
 // listen to app
