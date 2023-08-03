@@ -3,6 +3,8 @@ import { PineconeClient } from "@pinecone-database/pinecone";
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import * as dotenv from "dotenv";
 import queryPineconeVectorStoreAndQueryLLM from "./pinecone/queryPineconeAndQueryGPT.js";
+import updatePinecone from "./pinecone/updatePinecone.js";
+import createPineconeIndex from "./pinecone/createPineconeIndex.js"
 
 dotenv.config()
 
@@ -32,8 +34,8 @@ async function init() {
 
   // await createPineconeIndex(client, indexName, vectorDimension);
 
-  // await updatePinecone(client, indexName, docs);
+  await updatePinecone(client, indexName, docs);
 
-  await queryPineconeVectorStoreAndQueryLLM(client, indexName, "What is love?", null, false);
+  // await queryPineconeVectorStoreAndQueryLLM(client, indexName, "What is love?", null, false);
 })();
 
