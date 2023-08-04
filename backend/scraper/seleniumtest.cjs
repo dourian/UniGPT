@@ -1,7 +1,6 @@
 const crypto = require("crypto");
 const fs = require("fs");
 const webdriver = require("selenium-webdriver"),
-
   By = webdriver.By,
   until = webdriver.until;
 
@@ -15,6 +14,7 @@ main();
  */
 async function main() {
   try {
+    await loadVisitedUrls();
     await scrapePage("https://uwaterloo.ca/"); // Replace with the starting URL
   } catch (error) {
     console.error("Error occurred:", error);
@@ -49,29 +49,40 @@ async function testSelenium() {
  */
 async function scrapePage(url) {
   if (visitedUrls.has(url)) {
-    return; // Avoid revisiting the same URL
+    return;
   }
-
   visitedUrls.add(url);
 
   await driver.get(url);
 
   // Extract visible text from the page
-  const pageText = await driver.executeScript(
-    "return document.documentElement.innerText"
-  );
+
+  let pageText = "";
+  try {
+    pageText = await driver.executeScript(
+      "return document.documentElement.innerText"
+    );
+  } catch (error) {
+    console.log("Error occurred:", error);
+  }
 
   // Generate a unique filename based on the URL
   const filename = generateUniqueFilename(url);
 
   // Save the page text to a text file with the unique filename
-  fs.writeFileSync("../documents/"+filename, pageText);
+  fs.writeFileSync("../documents/" + filename, pageText);
 
   // Recursively find and click on other links
   const linkElements = await driver.findElements(By.css("a"));
   for (const linkElement of linkElements) {
     const linkHref = await linkElement.getAttribute("href");
-    if (linkHref?.startsWith("http")) {
+    if (
+      linkHref?.startsWith("https://uwaterloo.ca") &&
+      !visitedUrls.has(linkHref) &&
+      !linkHref.endsWith(".pdf")
+    ) {
+      await fs.appendFileSync("../documents/visited_urls.txt", linkHref + "\n");
+      console.log(linkHref);
       await scrapePage(linkHref);
     }
   }
@@ -80,4 +91,15 @@ async function scrapePage(url) {
 function generateUniqueFilename(url) {
   const hash = crypto.createHash("sha256").update(url).digest("hex");
   return `page_${hash}.txt`;
+}
+
+async function loadVisitedUrls() {
+  try {
+    const data = fs.readFileSync("../documents/visited_urls.txt", "utf8");
+    const urls = data.split("\n");
+    urls.forEach((url) => visitedUrls.add(url));
+    console.log("Loaded visited URLs:", visitedUrls);
+  } catch (error) {
+    console.log("Error loading visited URLs:", error);
+  }
 }
