@@ -42,7 +42,7 @@ app.get('/ask', jsonParser, async (req, res) => {
       environment: process.env.PINECONE_ENVIRONMENT,
     });
 
-    console.log(req.body)
+    console.log(req)
 
     // fetch data from json
     const question = req.body.question || ""
