@@ -45,7 +45,7 @@ app.get('/ask', jsonParser, async (req, res) => {
     console.log(req)
 
     // fetch data from json
-    const question = req.body.question || ""
+    const question = req.body.question || req.query.question || ""
 
     // handle empty question
     if (question === "" || question === null) {
