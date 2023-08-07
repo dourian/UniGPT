@@ -42,6 +42,8 @@ app.get('/ask', jsonParser, async (req, res) => {
       environment: process.env.PINECONE_ENVIRONMENT,
     });
 
+    console.log(req.body)
+
     // fetch data from json
     const question = req.body.question || ""
 
@@ -51,9 +53,11 @@ app.get('/ask', jsonParser, async (req, res) => {
     }
 
     const useStream = true;
-
+    const prePrompt = "You are going to act as an advisor for the University of Waterloo. I will ask you a question, and I want you to answer it to the best of you abilities. Here is the question: "
     // query and send answer
-    const answer = await queryQuestion(pclient, indexName, question, res, useStream)
+
+    const promptedQuestion = prePrompt + question;
+    const answer = await queryQuestion(pclient, indexName, promptedQuestion, res, useStream)
 
     if (!useStream) res.send(answer);
 
