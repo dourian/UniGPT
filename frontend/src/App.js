@@ -4,13 +4,17 @@ import{ BsSearch } from "react-icons/bs"
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Home from "./Home";
 import Ask from "./Ask"
+import Temp from "./Temp"
 
 function App() {
+    const [isDark, setIsDark] = useState(false);
+
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Home></Home>}></Route>
-        <Route exact path="/ask" element={<Ask></Ask>}></Route>
+        <Route exact path="/temp" element={<Temp></Temp>}></Route>
+        <Route exact path="/" element={<Home isDark={isDark} setIsDark={setIsDark}></Home>}></Route>
+        <Route exact path="/ask" element={<Ask isDark={isDark} setIsDark={setIsDark}></Ask>}></Route>
       </Routes>
     </Router>
   );
