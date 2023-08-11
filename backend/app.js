@@ -71,18 +71,18 @@ app.get('/ask', jsonParser, async (req, res) => {
 // generate prompts
 app.get('/prompts', jsonParser, async (req, res) => {
   try {
-    initPinecone()
-    await pclient.init({
-      apiKey: process.env.PINECONE_API_KEY,
-      environment: process.env.PINECONE_ENVIRONMENT,
-    });
+    // initPinecone()
+    // await pclient.init({
+    //   apiKey: process.env.PINECONE_API_KEY,
+    //   environment: process.env.PINECONE_ENVIRONMENT,
+    // });
 
-    const useStream = false
-    const question = "What are 4 example questions a user can ask you? Number each example from 1 to 4."
-    const answer = await queryQuestion(pclient, indexName, question, res, useStream)
-    const questionsArray = answer.split(/\d+\.\s+/).filter(item => item.trim() !== '');
-    console.log(questionsArray)
-    res.send(answer)
+    // const useStream = false
+    // const question = "What are 4 example questions a user can ask you? Number each example from 1 to 4."
+    // const answer = await queryQuestion(pclient, indexName, question, res, useStream)
+    // const questionsArray = answer.split(/\d+\.\s+/).filter(item => item.trim() !== '');
+    // console.log(questionsArray)
+    res.send("hi")
 
   } catch (error){
     console.error("Error:", error);
