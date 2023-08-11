@@ -8,13 +8,14 @@ import Temp from "./Temp"
 
 function App() {
     const [isDark, setIsDark] = useState(false);
+    const [inputValue, setInputValue] = useState("");
 
   return (
     <Router>
       <Routes>
         <Route exact path="/temp" element={<Temp></Temp>}></Route>
-        <Route exact path="/" element={<Home isDark={isDark} setIsDark={setIsDark}></Home>}></Route>
-        <Route exact path="/ask" element={<Ask isDark={isDark} setIsDark={setIsDark}></Ask>}></Route>
+        <Route exact path="/" element={<Home isDark={isDark} setIsDark={setIsDark} inputValue={inputValue} setInputValue={setInputValue}></Home>}></Route>
+        <Route exact path="/ask" element={<Ask isDark={isDark} setIsDark={setIsDark} inputValue={inputValue} setInputValue={setInputValue}></Ask>}></Route>
       </Routes>
     </Router>
   );

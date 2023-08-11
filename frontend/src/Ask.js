@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { BackendContext } from "./BackendProvider";
 import {
   IoIosArrowDropleftCircle,
 } from "react-icons/io";
@@ -6,8 +7,9 @@ import { RiArrowUpCircleFill } from "react-icons/ri"
 import { BsThreeDots } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
-export default function Ask({ isDark, setIsDark }) {
-  const [inputValue, setInputValue] = useState("");
+export default function Ask({ isDark, setIsDark, inputValue, setInputValue}) {
+  const { getAnswer, setAnswer, answer, isLoading} =
+  useContext(BackendContext);
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
@@ -38,7 +40,7 @@ export default function Ask({ isDark, setIsDark }) {
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}
-                placeholder={"Tell me about the University of Waterloo"}
+                placeholder={inputValue}
               />
             </label>
           </form>

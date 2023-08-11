@@ -6,8 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DarkModeToggle from "./components/DarkModeToggle";
 import { useNavigate } from "react-router-dom";
 
-export default function Home({ isDark, setIsDark }) {
-  const [inputValue, setInputValue] = useState("");
+export default function Home({ isDark, setIsDark, inputValue, setInputValue }) {
   const navigate = useNavigate();
   const { getAnswer, setAnswer, answer, isLoading } =
     useContext(BackendContext);
