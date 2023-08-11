@@ -4,66 +4,34 @@ import axios from "axios";
 export const BackendContext = createContext();
 
 export const BackendProvider = ({ children }) => {
-  const [disabledAsk, setDisabledAsk] = useState("");
   const [answer, setAnswer] = useState("");
   const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [prompts, setPrompts] = useState([])
-
-  const getPrompts = (prompts) => {
+  const [isLoading, setIsLoading] = useState(0);
+  
+  const getAnswer = (question) => {
+    setIsLoading(1)
+    console.log(isLoading)
+  
     let config = {
-      method: "get",
+      method: 'get',
       maxBodyLength: Infinity,
-      url: "https://unigpt-c074044c0e9d.herokuapp.com/prompts",
-      headers: {
-        "Content-Type": "application/json",
+      url: 'https://unigpt-c074044c0e9d.herokuapp.com/ask',
+      headers: { 
+        'Content-Type': 'application/json'
       },
-      params: {},
+      params: {
+        question: question
+      }
     };
-
-    axios
-      .request(config)
-      .then((response) => {
-        console.log("response: ", response.data)
-        const ans = JSON.parse(JSON.stringify(response.data))
-        console.log("answer: ", ans)
-        return ans
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const getAnswer = async (question) => {
-    try {
-      setIsLoading(true);
   
-      console.log(isLoading);
-  
-      let config = {
-        method: "get",
-        maxBodyLength: Infinity,
-        url: "https://unigpt-c074044c0e9d.herokuapp.com/ask",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        params: {
-          question: question,
-        },
-      };
-  
-      const response = await axios.request(config);
-  
-      const ans = JSON.stringify(response.data).substr(1).slice(0, -1);
-      setIsLoading(false);
-      setDisabledAsk("");
-      console.log(ans);
-      return ans;
-    } catch (error) {
+    axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
       console.log(error);
-    }
-  };
-  
+    });
+  }
 
   const contextValue = useMemo(
     () => ({
@@ -72,13 +40,8 @@ export const BackendProvider = ({ children }) => {
       answer,
       isLoading,
       setIsLoading,
-      disabledAsk,
-      setDisabledAsk,
-      getPrompts,
-      prompts, 
-      setPrompts
     }),
-    [answer, isLoading, disabledAsk]
+    [answer]
   );
 
   return (
