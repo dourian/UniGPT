@@ -5,9 +5,9 @@ export const BackendContext = createContext();
 
 export const BackendProvider = ({ children }) => {
   const [answer, setAnswer] = useState("");
-  const [isLoading, setIsLoading] = useState(0)
+  const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(0);
   
-
   const getAnswer = (question) => {
     setIsLoading(1)
     console.log(isLoading)
@@ -39,7 +39,7 @@ export const BackendProvider = ({ children }) => {
       setAnswer,
       answer,
       isLoading,
-      setIsLoading
+      setIsLoading,
     }),
     [answer]
   );
