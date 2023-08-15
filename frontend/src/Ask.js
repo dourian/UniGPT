@@ -13,11 +13,11 @@ import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Ask({ isDark, setIsDark }) {
-  const [inputValue, setInputValue] = useState("");
-  const { getAnswer, isLoading, disabledAsk, setDisabledAsk, getPrompts, prompts, setPrompts } =
+  const { getAnswer, isLoading, disabledAsk, setDisabledAsk, getPrompts, prompts, setPrompts, inputValue, setInputValue } =
     useContext(BackendContext);
   const [conversationArr, setConversationArr] = useState([]);
   const [renderedConversation, setRenderedConversation] = useState([]);
+  const [showPrompts, setShowPrompts] = useState(true);
 
   const notify = () => toast("You cannot enter a blank question!");
 
@@ -65,6 +65,7 @@ export default function Ask({ isDark, setIsDark }) {
 
   const queryQuestion = async (event) => {
     event.preventDefault();
+    setShowPrompts(false);
     if (inputValue === "") {
       notify();
     } else {
@@ -101,10 +102,10 @@ export default function Ask({ isDark, setIsDark }) {
         <h1 className="mt-[80px] text-6xl font-bold text-black text-center w-full">
           UniGPT
         </h1>
+        {showPrompts? <Prompts /> :
         <div className=" h-5/6 overflow-scroll">
         {renderedConversation}
-        </div>
-        <Prompts />
+        </div> }
         <div className="flex flex-row w-full mb-[10px] items-center justify-center gap-4">
           <form onSubmit={queryQuestion} className="w-[500px] drop_shadow">
             <label>
