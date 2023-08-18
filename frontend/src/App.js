@@ -4,6 +4,7 @@ import{ BsSearch } from "react-icons/bs"
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Home from "./Home";
 import Ask from "./Ask"
+import EnterKey from "./components/EnterKey";
 
 function App() {
     const [isDark, setIsDark] = useState(false);
@@ -13,6 +14,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<Home isDark={isDark} setIsDark={setIsDark} inputValue={inputValue} setInputValue={setInputValue}></Home>}></Route>
+        <Route exact path="/key" element={<EnterKey></EnterKey>}></Route>
         <Route exact path="/ask" element={<Ask isDark={isDark} setIsDark={setIsDark} inputValue={inputValue} setInputValue={setInputValue}></Ask>}></Route>
       </Routes>
     </Router>

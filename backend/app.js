@@ -38,14 +38,14 @@ app.get('/', (req, res) => {
 
 app.get('/initkey', jsonParser, async (req, res) => {
     const key = req.body.key || req.query.key || ""
-
+    console.log(key)
     // verify the key works by creating a llm, send data
     try {
         new OpenAI({
           openAIApiKey: key,
         });
         openAiKey = key
-        // console.log(key)
+        
         res.json({status: "success"})
     } catch (err) {
         console.log(err)

@@ -63,6 +63,29 @@ export const BackendProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const setApiKey = async (key) => {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:8000/initkey',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      params: {
+        key: key,
+      },
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      console.log(response.data.status)
+      return response.data.status
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
   
 
   const contextValue = useMemo(
@@ -76,7 +99,10 @@ export const BackendProvider = ({ children }) => {
       setDisabledAsk,
       getPrompts,
       prompts, 
-      setPrompts
+      setPrompts,
+      inputValue,
+      setInputValue,
+      setApiKey
     }),
     [answer, isLoading, disabledAsk]
   );
