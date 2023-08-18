@@ -13,6 +13,7 @@ import streamAnswerGPT from "../controller/streamanswer.js";
  * @param {string} question The question to be queried
  * @param {*} response Response object from express route
  * @param {boolean} streamTrue True: want streaming, False: no streaming
+ * @param {string} openAiKey The OpenAI key of the client
  * @returns answer to queried quesion
  */
 const queryPineconeVectorStoreAndQueryLLM = async (
@@ -20,13 +21,14 @@ const queryPineconeVectorStoreAndQueryLLM = async (
   indexName,
   question,
   response,
-  streamTrue
+  streamTrue,
+  openAiKey
 ) => {
   const index = client.Index(indexName);
 
   // create embeddings
   const queryEmbedding = await new OpenAIEmbeddings({
-    openAIApiKey: process.env.OPEN_API_KEY,
+    openAIApiKey: openAiKey,
   }).embedQuery(question);
 
   // query question

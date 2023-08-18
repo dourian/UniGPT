@@ -4,6 +4,7 @@ import bodyParser from "body-parser"
 import cors from 'cors'
 import queryQuestion from "./pinecone/queryPineconeAndQueryGPT.js"
 import * as dotenv from "dotenv";
+import { OpenAI } from "langchain/llms/openai";
 
 const app = express();
 const jsonParser = bodyParser.json()
@@ -15,6 +16,9 @@ app.use(cors());
 // inits for pinecone
 const indexName = "unigpt";
 let pclient = new PineconeClient();
+
+// open ai key
+let openAiKey = "";
 
 /**
  * Initializes Pinecone Client
@@ -32,6 +36,23 @@ app.get('/', (req, res) => {
     res.send("Welcome to UniGPT!")
 });
 
+app.get('/initkey', jsonParser, async (req, res) => {
+    const key = req.body.key || req.query.key || ""
+
+    // verify the key works by creating a llm, send data
+    try {
+        new OpenAI({
+          openAIApiKey: key,
+        });
+        openAiKey = key
+        // console.log(key)
+        res.json({status: "success"})
+    } catch (err) {
+        console.log(err)
+        res.json({status: "failure"})
+    }
+})
+
 // ask question route
 app.get('/ask', jsonParser, async (req, res) => {
   try {
@@ -41,8 +62,6 @@ app.get('/ask', jsonParser, async (req, res) => {
       apiKey: process.env.PINECONE_API_KEY,
       environment: process.env.PINECONE_ENVIRONMENT,
     });
-
-    console.log(req)
 
     // fetch data from json
     const question = req.body.question || req.query.question || ""
@@ -57,7 +76,7 @@ app.get('/ask', jsonParser, async (req, res) => {
     // query and send answer
 
     const promptedQuestion = prePrompt + question;
-    const answer = await queryQuestion(pclient, indexName, promptedQuestion, res, useStream)
+    const answer = await queryQuestion(pclient, indexName, promptedQuestion, res, useStream, openAiKey)
 
     if (!useStream) res.send(answer);
 
