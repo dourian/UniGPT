@@ -11,16 +11,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function Ask({ isDark, setIsDark }) {
+export default function Ask() {
   const [inputValue, setInputValue] = useState("");
   const {
     getAnswer,
     isLoading,
     disabledAsk,
     setDisabledAsk,
-    getPrompts,
-    prompts,
-    setPrompts,
   } = useContext(BackendContext);
   const [conversationArr, setConversationArr] = useState([]);
   const [renderedConversation, setRenderedConversation] = useState([]);
@@ -34,25 +31,19 @@ export default function Ask({ isDark, setIsDark }) {
     bottomEl?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // useEffect(() => {
-  //   if (!prompts.length) {
-  //     getPrompts()
-  //   }
-  // }, [])
-
   useEffect(() => {
     let temp = [];
     conversationArr.forEach((item) => {
       if (item.type === "user") {
         temp.push(
-          <div className="bg-[#FFFFFF] min-h-[150px] border border-gray-300">
-            <p className="text-right w-full pl-24 pr-10 text-lg">{item.text}</p>
+          <div className="bg-[#FFFFFF] border border-gray-300 h-fit">
+            <p className="text-right w-full pl-24 pr-10 text-lg pt-5 pb-5">{item.text}</p>
           </div>
         );
       } else if (item.type === "bot") {
         temp.push(
-          <div className=" bg-[#F7F7F8] min-h-[150px] border border-gray-300">
-            <p className="text-left w-full pl-24 pr-10 text-lg">{item.text}</p>
+          <div className="bg-[#F7F7F8] border border-gray-300 h-fit">
+            <p className="text-left w-full pl-10 pr-24 text-lg pt-5 pb-5">{item.text}</p>
           </div>
         );
       }
@@ -98,19 +89,14 @@ export default function Ask({ isDark, setIsDark }) {
 
   return (
     <div className="w-full h-[100vh]">
-      <div className="bg-[#101625] w-[80px] h-[100vh] transition-all duration-100 ease-in-out absolute z-10 place-items-between ">
-        <button className="m-4 border-b-[0.5px]" onClick={() => navigate("/")}>
-          <IoIosArrowDropleftCircle className="fill-white text-[30px] m-2" />
-        </button>
-        <button className="flex items-center align-center w-full mt-[85vh]">
-          <BsThreeDots className="flex mx-auto fill-white text-[20px]" />
-        </button>
-      </div>
       <div className="w-full h-[100vh] absolute flex flex-col justify-between z-0">
-        <div className="drop_shadow w-full">
-          <h1 className="mt-[15px] mb-[15px] text-6xl font-bold text-black text-center w-full">
+        <div className="drop_shadow w-full flex items-center">
+          <button className="m-2" onClick={() => navigate("/")}>
+            <IoIosArrowDropleftCircle className="fill-black text-[30px]" />
+          </button>
+          <h6 className="text-2xl font-bold text-black text-center flex-grow">
             UniGPT
-          </h1>
+          </h6>
         </div>
         <div className="overflow-scroll flex item-start flex-col h-full">
           {renderedConversation}
@@ -118,6 +104,9 @@ export default function Ask({ isDark, setIsDark }) {
         </div>
         {isNew && <Prompts />}
         <div className="flex flex-row w-full mb-[10px] items-center justify-center gap-4">
+          <button className="flex items-center align-center m-3">
+            <BsThreeDots className="flex mx-auto fill-black text-[20px]" />
+          </button>
           <form onSubmit={queryQuestion} className="w-[500px] drop_shadow">
             <label>
               <input

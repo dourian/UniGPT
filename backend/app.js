@@ -4,7 +4,7 @@ import bodyParser from "body-parser"
 import cors from 'cors'
 import queryQuestion from "./pinecone/queryPineconeAndQueryGPT.js"
 import * as dotenv from "dotenv";
-import { OpenAI } from "langchain/llms/openai";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 
 const app = express();
 const jsonParser = bodyParser.json()
@@ -16,9 +16,6 @@ app.use(cors());
 // inits for pinecone
 const indexName = "unigpt";
 let pclient = new PineconeClient();
-
-// open ai key
-let openAiKey = "";
 
 /**
  * Initializes Pinecone Client
@@ -38,19 +35,24 @@ app.get('/', (req, res) => {
 
 app.get('/initkey', jsonParser, async (req, res) => {
     const key = req.body.key || req.query.key || ""
-    console.log(key)
+
+    initPinecone()
+    await pclient.init({
+      apiKey: process.env.PINECONE_API_KEY,
+      environment: process.env.PINECONE_ENVIRONMENT,
+    });
+
     // verify the key works by creating a llm, send data
     try {
-        new OpenAI({
-          openAIApiKey: key,
-        });
-        openAiKey = key
-        
-        res.json({status: "success"})
-    } catch (err) {
-        console.log(err)
-        res.json({status: "failure"})
+        const queryEmbedding = await new OpenAIEmbeddings({
+            openAIApiKey: key,
+          }).embedQuery("hi");
+    } catch {
+        res.send({status: "failure"})
+        return;
     }
+
+    res.send({status: "success"})
 })
 
 // ask question route
@@ -65,6 +67,7 @@ app.get('/ask', jsonParser, async (req, res) => {
 
     // fetch data from json
     const question = req.body.question || req.query.question || ""
+    const key = req.body.key || req.query.key || ""
 
     // handle empty question
     if (question === "" || question === null) {
@@ -76,12 +79,13 @@ app.get('/ask', jsonParser, async (req, res) => {
     // query and send answer
 
     const promptedQuestion = prePrompt + question;
-    const answer = await queryQuestion(pclient, indexName, promptedQuestion, res, useStream, openAiKey)
+    const answer = await queryQuestion(pclient, indexName, promptedQuestion, res, useStream, key)
 
     if (!useStream) res.send(answer);
 
     res.end();
-  } catch {
+  } catch(err) {
+    console.log(err)
     res.send("Something went wrong")
   }
   
