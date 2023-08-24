@@ -4,7 +4,7 @@ const webdriver = require("selenium-webdriver"),
   By = webdriver.By,
   until = webdriver.until;
 
-const driver = new webdriver.Builder().forBrowser("chrome").build();
+const driver = new webdriver.Builder().forBrowser("safari").build();
 const visitedUrls = new Set();
 
 main();
@@ -15,7 +15,7 @@ main();
 async function main() {
   try {
     await loadVisitedUrls();
-    await scrapePage("https://uwaterloo.ca/"); // Replace with the starting URL
+    await scrapePage("https://ucalendar.uwaterloo.ca/2021/COURSE/course-CS.html"); // Replace with the starting URL
   } catch (error) {
     console.error("Error occurred:", error);
   } finally {
@@ -79,7 +79,8 @@ async function scrapePage(url) {
     if (
       linkHref?.startsWith("https://uwaterloo.ca") &&
       !visitedUrls.has(linkHref) &&
-      !linkHref.endsWith(".pdf")
+      !linkHref.endsWith(".pdf") &&
+      !linkHref.includes("#")
     ) {
       await fs.appendFileSync("../documents/visited_urls.txt", linkHref + "\n");
       console.log(linkHref);

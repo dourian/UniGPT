@@ -8,7 +8,8 @@ export const BackendProvider = ({ children }) => {
   const [answer, setAnswer] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [prompts, setPrompts] = useState(["What are Waterloo’s admission averages?", "What undergraduate programs are offered at Waterloo?", "Tell me about Waterloo's residence options", "What are the degree requirements for Computer Science?", "List all the ENGL classes offered at Waterloo.", "How many engineering programs are at Waterloo?"])
+  const [prompts, setPrompts] = useState([])
+  const [validApiKey, setValidApiKey] = useState("")
 
   const getPrompts = (prompts) => {
     let config = {
@@ -43,12 +44,13 @@ export const BackendProvider = ({ children }) => {
       let config = {
         method: "get",
         maxBodyLength: Infinity,
-        url: "https://unigpt-c074044c0e9d.herokuapp.com/ask",
+        url: "http://localhost:8000/ask",
         headers: {
           "Content-Type": "application/json",
         },
         params: {
           question: question,
+          key: validApiKey,
         },
       };
   
@@ -63,6 +65,29 @@ export const BackendProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const setApiKey = async (key) => {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:8000/initkey',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      params: {
+        key: key,
+      },
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      console.log(response.data.status)
+      return response.data.status
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
   
 
   const contextValue = useMemo(
@@ -78,9 +103,11 @@ export const BackendProvider = ({ children }) => {
       prompts, 
       setPrompts,
       inputValue,
-      setInputValue
+      setInputValue,
+      validApiKey,
+      setValidApiKey
     }),
-    [answer, isLoading, disabledAsk, inputValue]
+    [answer, isLoading, disabledAsk, validApiKey]
   );
 
   return (
