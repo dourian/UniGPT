@@ -40,7 +40,7 @@ export default function Home({ isDark, setIsDark }) {
       redirect: "follow",
     };
 
-    await fetch("http://localhost:8000/initkey", requestOptions)
+    await fetch("https://unigpt-c074044c0e9d.herokuapp.com/initkey", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         setIsValid(result.includes("success"));

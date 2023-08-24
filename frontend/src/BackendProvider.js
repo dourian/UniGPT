@@ -44,7 +44,7 @@ export const BackendProvider = ({ children }) => {
       let config = {
         method: "get",
         maxBodyLength: Infinity,
-        url: "http://localhost:8000/ask",
+        url: "https://unigpt-c074044c0e9d.herokuapp.com/ask",
         headers: {
           "Content-Type": "application/json",
         },
