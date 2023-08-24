@@ -9,6 +9,7 @@ export const BackendProvider = ({ children }) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [prompts, setPrompts] = useState([])
+  const [validApiKey, setValidApiKey] = useState("")
 
   const getPrompts = (prompts) => {
     let config = {
@@ -43,12 +44,13 @@ export const BackendProvider = ({ children }) => {
       let config = {
         method: "get",
         maxBodyLength: Infinity,
-        url: "https://unigpt-c074044c0e9d.herokuapp.com/ask",
+        url: "http://localhost:8000/ask",
         headers: {
           "Content-Type": "application/json",
         },
         params: {
           question: question,
+          key: validApiKey,
         },
       };
   
@@ -102,9 +104,10 @@ export const BackendProvider = ({ children }) => {
       setPrompts,
       inputValue,
       setInputValue,
-      setApiKey
+      validApiKey,
+      setValidApiKey
     }),
-    [answer, isLoading, disabledAsk]
+    [answer, isLoading, disabledAsk, validApiKey]
   );
 
   return (

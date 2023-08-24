@@ -18,6 +18,7 @@ export default function Ask() {
     isLoading,
     disabledAsk,
     setDisabledAsk,
+    validApiKey
   } = useContext(BackendContext);
   const [conversationArr, setConversationArr] = useState([]);
   const [renderedConversation, setRenderedConversation] = useState([]);
@@ -30,6 +31,12 @@ export default function Ask() {
   const scrollToBottom = () => {
     bottomEl?.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    if (validApiKey == "") {
+        navigate("/")
+    }
+  },[validApiKey])
 
   useEffect(() => {
     let temp = [];
