@@ -12,7 +12,6 @@ import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Ask({ isDark, setIsDark }) {
-  const [inputValue, setInputValue] = useState("");
   const {
     getAnswer,
     isLoading,
@@ -20,13 +19,14 @@ export default function Ask({ isDark, setIsDark }) {
     setDisabledAsk,
     validApiKey,
     getPrompts, 
+    inputValue,
+    setInputValue,
     prompts,
     setPrompts
   } = useContext(BackendContext);
   const [conversationArr, setConversationArr] = useState([]);
   const [renderedConversation, setRenderedConversation] = useState([]);
   const [isNew, setIsNew] = useState(true);
-  const [showPrompts, setShowPrompts] = useState(true);
   const [showPrompts, setShowPrompts] = useState(true);
 
   const notify = () => toast("You cannot enter a blank question!");
