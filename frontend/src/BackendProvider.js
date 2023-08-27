@@ -8,8 +8,8 @@ export const BackendProvider = ({ children }) => {
   const [answer, setAnswer] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [prompts, setPrompts] = useState([])
   const [validApiKey, setValidApiKey] = useState("")
+  const [prompts, setPrompts] = useState(["What are Waterloo’s admission averages?", "What undergraduate programs are offered at Waterloo?", "Tell me about Waterloo's residence options", "What are the degree requirements for Computer Science?", "List all the ENGL classes offered at Waterloo.", "How many engineering programs are at Waterloo?"])
 
   const getPrompts = (prompts) => {
     let config = {
@@ -107,7 +107,7 @@ export const BackendProvider = ({ children }) => {
       validApiKey,
       setValidApiKey
     }),
-    [answer, isLoading, disabledAsk, validApiKey]
+    [answer, isLoading, disabledAsk, validApiKey, inputValue]
   );
 
   return (
