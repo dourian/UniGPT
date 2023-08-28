@@ -5,6 +5,29 @@ Navigating the complexities of university life can be challenging and time-consu
 
 Created by Sarina Li, Jacqueline Ho, and Dorian Chen
 
+## Tech Stack
+
+#### Frontend
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
+![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
+
+#### Backend
+[🦜 🔗 LangChain](https://www.langchain.com/)
+[Pinecone](https://www.pinecone.io/)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
+![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+
+#### Other
+![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white)
+
+
+## Architecture
 ![uni gpt](https://github.com/dourian/UniGPT/assets/75771131/d0b319bc-a3a5-496d-abab-22b7fd408966)
 ![uni gpt (1)](https://github.com/dourian/UniGPT/assets/75771131/73e05d86-bd38-4c23-94bf-6f3fc03ca669)
 
