@@ -5,11 +5,11 @@ Navigating the complexities of university life can be challenging and time-consu
 
 
 
-https://github.com/dourian/UniGPT/assets/75771131/bb5b4df1-c373-40b7-ad29-ecd04ef3f803
+https://github.com/dourian/UniGPT/assets/75771131/10d6068b-d72c-47ce-b7e8-5566f30399d7
 
 
 
-Created by Sarina Li, Jacqueline Ho, and Dorian Chen
+Created by [Sarina Li](https://github.com/sarinali), [Jacqueline Ho](https://github.com/jho426), and Dorian Chen
 
 ## Tech Stack
 
@@ -34,5 +34,4 @@ Created by Sarina Li, Jacqueline Ho, and Dorian Chen
 
 
 ## Architecture
-![uni gpt](https://github.com/dourian/UniGPT/assets/75771131/d0b319bc-a3a5-496d-abab-22b7fd408966)
-
+![255730727-d0b319bc-a3a5-496d-abab-22b7fd408966](https://github.com/dourian/UniGPT/assets/75771131/4f5b625c-4d8c-4076-b40d-69392903ba3c)
