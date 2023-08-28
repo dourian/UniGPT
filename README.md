@@ -11,8 +11,6 @@ https://github.com/dourian/UniGPT/assets/75771131/10d6068b-d72c-47ce-b7e8-5566f3
 
 Created by [Sarina Li](https://github.com/sarinali), [Jacqueline Ho](https://github.com/jho426), and Dorian Chen
 
-#### [API](https://unigpt-c074044c0e9d.herokuapp.com/), [SITE](https://universitygpt-43101.web.app/)
-
 ## Tech Stack
 
 #### Frontend
@@ -39,4 +37,5 @@ Created by [Sarina Li](https://github.com/sarinali), [Jacqueline Ho](https://git
 ![255730727-d0b319bc-a3a5-496d-abab-22b7fd408966](https://github.com/dourian/UniGPT/assets/75771131/4f5b625c-4d8c-4076-b40d-69392903ba3c)
 
 ## Try out UniGPT!
-Link: https://universitygpt-43101.web.app/
+Site: https://universitygpt-43101.web.app/
+API: https://unigpt-c074044c0e9d.herokuapp.com/
