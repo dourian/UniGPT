@@ -20,7 +20,7 @@ Created by Sarina Li, Jacqueline Ho, and Dorian Chen
 [![Pinecone](https://img.shields.io/badge/-Pinecone-blue)](https://www.pinecone.io/)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
-![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
+[![GPT](https://platform.openai.com/docs/guides/gpt)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 
 #### Other
