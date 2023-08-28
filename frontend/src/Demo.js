@@ -80,12 +80,10 @@ export default function Demo() {
 
       setTimeout(() => {
         setConversationArr((prev) => [...prev, new Conversation("bot", ans)]);
+        setDemoSteps([false, false, false, false]);
       }, 1000);
     }
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
+    setTimeout(() => {setIsLoading(false);}, 1000);
     setTimeout(() => {
       setDemoSteps([false, false, false, true]);
     }, 3000);
@@ -98,11 +96,11 @@ export default function Demo() {
   return (
     <div className="w-full h-[100vh]">
       <div className="w-full h-[100vh] absolute flex flex-col justify-between z-0">
-        <div className="drop_shadow w-full flex items-center">
+        <div className="drop_shadow flex items-center w-full">
           <Popover
             placement="right"
             content={
-              <div className="w-[400px]">
+              <div className="max-w-[200px]">
                 Good job, you've completed the demo. Thanks for trying out
                 UniGPT! Click here to go back to the start page.
               </div>
@@ -153,8 +151,8 @@ export default function Demo() {
             <div ref={bottomEl}></div>
           </div>
         )}
-        <div className="flex flex-row w-full mb-[10px] items-center justify-center gap-4 mt-2">
-          <form onSubmit={queryQuestion} className="w-[500px] drop_shadow">
+        <div className="flex flex-row w-11/12 mb-[10px] items-center justify-center gap-4 mt-2">
+          <form onSubmit={queryQuestion} className="w-10/12 max-w-[500px] drop_shadow">
             <label>
               <input
                 className="border-[2px] rounded-lg mx-4 py-1 px-4 h-[50px] w-full"
@@ -168,8 +166,8 @@ export default function Demo() {
               ></input>
             </label>
           </form>
-          <form onSubmit={queryQuestion}>
-            {!demoSteps[3] && (
+          {!demoSteps[3] && (
+            <form onSubmit={queryQuestion}>
               <button
                 className="bg-[#101625] w-[50px] m-2 h-[50px] text-white text-center items-center text-sm rounded-lg drop_shadow flex flex-col justify-center relative"
                 type="submit"
@@ -192,8 +190,8 @@ export default function Demo() {
                   </Popover>
                 )}
               </button>
-            )}
-          </form>
+            </form>
+          )}
         </div>
       </div>
       <ToastContainer />

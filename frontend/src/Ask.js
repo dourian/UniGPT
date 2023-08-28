@@ -117,10 +117,7 @@ export default function Ask() {
             <div ref={bottomEl}></div>
           </div>
         )}
-        <div className="flex flex-row w-full mb-[10px] items-center justify-center gap-4">
-          <button className="flex items-center align-center m-3">
-            <BsThreeDots className="flex mx-auto fill-black text-[20px]" />
-          </button>
+        <div className="flex flex-row w-full mb-[10px] items-center justify-center gap-4 mt-2">
           <form onSubmit={queryQuestion} className="w-[500px] drop_shadow">
             <label>
               <input

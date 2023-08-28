@@ -14,7 +14,7 @@ function DemoPrompts({ demoSteps, setDemoSteps, setInputValue }) {
   };
 
   return (
-    <div className="w-[500px] grid grid-cols-2 gap-x-[6px] gap-y-[6px] self-center text-black">
+    <div className="w-11/12 max-w-[500px] grid grid-cols-2 gap-x-[6px] gap-y-[6px] self-center text-black">
       {prompts?.map((item, index) =>
         index === 2 ? (
           <Popover
@@ -32,7 +32,7 @@ function DemoPrompts({ demoSteps, setDemoSteps, setInputValue }) {
               onMouseEnter={() => setHoveredPrompt(item)}
               onMouseLeave={() => setHoveredPrompt()}
             >
-              <div className="w-[200px] mx-[10px] my-auto">{item}</div>
+              <div className="w-full h-full mx-[10px] my-auto overflow-clip"><p className="text-xs md:text-sm">{item}</p></div>
               <Tooltip title="Click to send" className="">
                 <button
                   onClick={() => generatePrompt(item)}
@@ -54,7 +54,7 @@ function DemoPrompts({ demoSteps, setDemoSteps, setInputValue }) {
               demoSteps[1] && "opacity-[30%]"
             }`}
           >
-            <div className="w-[200px] mx-[10px] my-auto">{item}</div>
+            <div className="w-full h-full mx-[10px] my-auto overflow-clip"><p className="text-xs md:text-sm">{item}</p></div>
           </div>
         )
       )}
