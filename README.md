@@ -16,8 +16,8 @@ Created by Sarina Li, Jacqueline Ho, and Dorian Chen
 ![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
 
 #### Backend
-[🦜 🔗 LangChain](https://www.langchain.com/)
-[Pinecone](https://www.pinecone.io/)
+[![🦜 🔗 LangChain](https://img.shields.io/badge/🦜%20🔗-LangChain-brightgreen)](https://www.langchain.com/)
+[![Pinecone](https://img.shields.io/badge/-Pinecone-blue)](https://www.pinecone.io/)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
 ![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
