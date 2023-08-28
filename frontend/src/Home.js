@@ -19,9 +19,14 @@ export default function Home({ isDark, setIsDark }) {
     }
   }, [isValid]);
 
-  const handleSubmit = (event) => {
+  const handleStart = (event) => {
     event.preventDefault();
     checkApiKey();
+  };
+
+  const handleStartDemo = (event) => {
+    event.preventDefault();
+    navigate("/demo");
   };
 
   const handleChange = (event) => {
@@ -30,7 +35,10 @@ export default function Home({ isDark, setIsDark }) {
   };
 
   const checkApiKey = async () => {
+    if (apiKeyInput == "") return;
+
     setIsKeyLoading(true);
+
     const myHeaders = new Headers();
     myHeaders.append("key", apiKeyInput);
 
@@ -40,7 +48,10 @@ export default function Home({ isDark, setIsDark }) {
       redirect: "follow",
     };
 
-    await fetch("http://localhost:8000/initkey", requestOptions)
+    await fetch(
+      "https://unigpt-c074044c0e9d.herokuapp.com/initkey",
+      requestOptions
+    )
       .then((response) => response.text())
       .then((result) => {
         setIsValid(result.includes("success"));
@@ -56,7 +67,17 @@ export default function Home({ isDark, setIsDark }) {
         isDark ? "dark" : "light"
       } w-full h-[100vh] text-center overflow-y-hidden flex justify-center items-center`}
     >
-      <DarkModeToggle isDark={isDark} setIsDark={setIsDark} />
+      {/* <DarkModeToggle isDark={isDark} setIsDark={setIsDark} /> */}
+      <div className="absolute top-0 left-0 w-full justify-normal gap-4 flex text-sm rounded-lg drop_shadow p-4">
+        <button
+          type="submit"
+          onClick={(e) => handleStartDemo(e)}
+        >
+          {"Try Demo"}
+        </button>
+        <a href="https://github.com/dourian/UniGPT">Github</a>
+        <a href="https://unigpt-c074044c0e9d.herokuapp.com">API</a>
+      </div>
       <div className={`${isDark ? "dark" : "light"} w-full`}>
         <h1 className={`${isDark ? "dark" : "light"} font-bold text-6xl`}>
           UniGPT
@@ -75,24 +96,22 @@ export default function Home({ isDark, setIsDark }) {
               value={apiKeyInput}
               onChange={handleChange}
               placeholder={"Enter your OpenAI API key"}
-              // disabled={disabledAsk}
             ></input>
           </label>
+          <button
+            className={`${
+              !isDark ? "dark" : "light"
+            } text-sm rounded-lg px-4 py-2 mt-[100px] drop_shadow`}
+            type="submit"
+            onClick={(e) => handleStart(e)}
+          >
+            {isKeyLoading ? (
+              <CircularProgress color="inherit" size={40} />
+            ) : (
+              "Start"
+            )}
+          </button>
         </form>
-        <button
-          className={`${
-            !isDark ? "dark" : "light"
-          } text-sm rounded-lg px-4 py-2 mt-[100px] drop_shadow`}
-          type="submit"
-          onClick={(e) => handleSubmit(e)}
-        >
-          {isKeyLoading ? (
-            <CircularProgress color="inherit" size={40} />
-          ) : (
-            "Start"
-          )}
-        </button>
-        <label></label>
       </div>
     </div>
   );

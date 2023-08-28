@@ -12,17 +12,18 @@ import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Ask() {
-  const [inputValue, setInputValue] = useState("");
   const {
     getAnswer,
     isLoading,
     disabledAsk,
     setDisabledAsk,
-    validApiKey
+    validApiKey,
+    inputValue,
+    setInputValue,
   } = useContext(BackendContext);
   const [conversationArr, setConversationArr] = useState([]);
   const [renderedConversation, setRenderedConversation] = useState([]);
-  const [isNew, setIsNew] = useState(true);
+  const [showPrompts, setShowPrompts] = useState(true);
 
   const notify = () => toast("You cannot enter a blank question!");
 
@@ -34,9 +35,9 @@ export default function Ask() {
 
   useEffect(() => {
     if (validApiKey == "") {
-        navigate("/")
+      navigate("/");
     }
-  },[validApiKey])
+  }, [validApiKey]);
 
   useEffect(() => {
     let temp = [];
@@ -44,13 +45,17 @@ export default function Ask() {
       if (item.type === "user") {
         temp.push(
           <div className="bg-[#FFFFFF] border border-gray-300 h-fit">
-            <p className="text-right w-full pl-24 pr-10 text-lg pt-5 pb-5">{item.text}</p>
+            <p className="text-right w-full pl-24 pr-10 text-lg pt-5 pb-5">
+              {item.text}
+            </p>
           </div>
         );
       } else if (item.type === "bot") {
         temp.push(
           <div className="bg-[#F7F7F8] border border-gray-300 h-fit">
-            <p className="text-left w-full pl-10 pr-24 text-lg pt-5 pb-5">{item.text}</p>
+            <p className="text-left w-full pl-10 pr-24 text-lg pt-5 pb-5">
+              {item.text}
+            </p>
           </div>
         );
       }
@@ -86,8 +91,6 @@ export default function Ask() {
         ...prev,
         new Conversation("bot", ans),
       ]);
-      console.log(conversationArr);
-      setIsNew(false);
     }
   };
 
@@ -96,25 +99,25 @@ export default function Ask() {
   }, [renderedConversation]);
 
   return (
-    <div className="w-full h-[100vh]">
+    <div className="w-full h-[100vh] bg-[#f7f9fb]">
       <div className="w-full h-[100vh] absolute flex flex-col justify-between z-0">
         <div className="drop_shadow w-full flex items-center">
           <button className="m-2" onClick={() => navigate("/")}>
             <IoIosArrowDropleftCircle className="fill-black text-[30px]" />
           </button>
-          <h6 className="text-2xl font-bold text-black text-center flex-grow">
+          <h6 className="text-2xl font-bold mt-[5px] text-black text-center flex-grow">
             UniGPT
           </h6>
         </div>
-        <div className="overflow-scroll flex item-start flex-col h-full">
-          {renderedConversation}
-          <div ref={bottomEl}></div>
-        </div>
-        {isNew && <Prompts />}
-        <div className="flex flex-row w-full mb-[10px] items-center justify-center gap-4">
-          <button className="flex items-center align-center m-3">
-            <BsThreeDots className="flex mx-auto fill-black text-[20px]" />
-          </button>
+        {showPrompts ? (
+          <Prompts />
+        ) : (
+          <div className="overflow-scroll flex item-start flex-col h-full">
+            {renderedConversation}
+            <div ref={bottomEl}></div>
+          </div>
+        )}
+        <div className="flex flex-row w-full mb-[10px] items-center justify-center gap-4 mt-2">
           <form onSubmit={queryQuestion} className="w-[500px] drop_shadow">
             <label>
               <input
