@@ -99,13 +99,13 @@ export default function Ask() {
   }, [renderedConversation]);
 
   return (
-    <div className="w-full h-[100vh]">
+    <div className="w-full h-[100vh] bg-[#f7f9fb]">
       <div className="w-full h-[100vh] absolute flex flex-col justify-between z-0">
         <div className="drop_shadow w-full flex items-center">
           <button className="m-2" onClick={() => navigate("/")}>
             <IoIosArrowDropleftCircle className="fill-black text-[30px]" />
           </button>
-          <h6 className="text-2xl font-bold text-black text-center flex-grow">
+          <h6 className="text-2xl font-bold mt-[5px] text-black text-center flex-grow">
             UniGPT
           </h6>
         </div>

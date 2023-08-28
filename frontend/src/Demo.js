@@ -94,7 +94,7 @@ export default function Demo() {
   }, [renderedConversation]);
 
   return (
-    <div className="w-full h-[100vh]">
+    <div className="w-full h-[100vh] bg-[#f7f9fb]">
       <div className="w-full h-[100vh] absolute flex flex-col justify-between z-0">
         <div className="drop_shadow flex items-center w-full">
           <Popover
