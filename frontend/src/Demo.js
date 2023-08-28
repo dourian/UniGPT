@@ -83,9 +83,12 @@ export default function Demo() {
       }, 1000);
     }
     setTimeout(() => {
-      setDemoSteps([false, false, false, true]);
       setIsLoading(false);
     }, 1000);
+
+    setTimeout(() => {
+      setDemoSteps([false, false, false, true]);
+    }, 3000);
   };
 
   useEffect(() => {
