@@ -36,7 +36,7 @@ export default function Home({ isDark, setIsDark }) {
 
   const checkApiKey = async () => {
     if (apiKeyInput == "") return;
-    
+
     setIsKeyLoading(true);
 
     const myHeaders = new Headers();
@@ -67,7 +67,17 @@ export default function Home({ isDark, setIsDark }) {
         isDark ? "dark" : "light"
       } w-full h-[100vh] text-center overflow-y-hidden flex justify-center items-center`}
     >
-      <DarkModeToggle isDark={isDark} setIsDark={setIsDark} />
+      {/* <DarkModeToggle isDark={isDark} setIsDark={setIsDark} /> */}
+      <div className="absolute top-0 left-0 w-full justify-normal gap-4 flex text-sm rounded-lg drop_shadow p-4">
+        <button
+          type="submit"
+          onClick={(e) => handleStartDemo(e)}
+        >
+          {"Try Demo"}
+        </button>
+        <a href="https://github.com/dourian/UniGPT">Github</a>
+        <a href="https://unigpt-c074044c0e9d.herokuapp.com">API</a>
+      </div>
       <div className={`${isDark ? "dark" : "light"} w-full`}>
         <h1 className={`${isDark ? "dark" : "light"} font-bold text-6xl`}>
           UniGPT
@@ -88,8 +98,6 @@ export default function Home({ isDark, setIsDark }) {
               placeholder={"Enter your OpenAI API key"}
             ></input>
           </label>
-        </form>
-        <div className="flex items-center justify-center self-center gap-2">
           <button
             className={`${
               !isDark ? "dark" : "light"
@@ -103,16 +111,7 @@ export default function Home({ isDark, setIsDark }) {
               "Start"
             )}
           </button>
-          <button
-            className={`${
-              !isDark ? "dark" : "light"
-            } text-sm rounded-lg px-4 py-2 mt-[100px] drop_shadow`}
-            type="submit"
-            onClick={(e) => handleStartDemo(e)}
-          >
-            {"Try Demo"}
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   );
