@@ -101,7 +101,7 @@ export default function Demo({ isDark, setIsDark }) {
                     content={"Hover over this prompt and click the send button!"}
                     visible={demoSteps[1]}
                 >
-                        <div key={index} className= {demoSteps[1] ? "flex border-black flex-row transition-border-color ease-in-out transition-[900ms] rounded-lg py-2 px-2 text-[14px] border-[1.5px] leading-snug h-[80px]" : "flex flex-row transition-border-color ease-in-out  transition-[900ms] rounded-lg py-2 px-2 text-[14px] border-[1.5px] leading-snug h-[80px]"} onMouseEnter={() => setHoveredPrompt(item)} onMouseLeave={() => setHoveredPrompt()}>                      
+                        <div key={index} className= {demoSteps[1] ? "flex border-black flex-row transition-border-color ease-in-out transition-[900ms] rounded-lg py-2 px-2 text-[14px] border-[1.5px] leading-snug h-[80px] animate-pulse" : "flex flex-row transition-border-color ease-in-out  transition-[900ms] rounded-lg py-2 px-2 text-[14px] border-[1.5px] leading-snug h-[80px]"} onMouseEnter={() => setHoveredPrompt(item)} onMouseLeave={() => setHoveredPrompt()}>                      
                             <div className = "w-[200px] mx-[10px] my-auto">{item}</div>
                             <Tooltip title = "Click to send" className="">
                                 <button onClick={() => generatePrompt(item)} className = {hoveredPrompt === item? "w-[30px] h-[30px] my-auto text-[18px] opacity-1 transition-[1000ms] ease-in-out" : "w-[30px] h-[30px] my-auto text-[18px] opacity-0 transition-[1000ms] ease-in-out"} >
@@ -111,7 +111,7 @@ export default function Demo({ isDark, setIsDark }) {
                         </div>
                 </Popover>
                 :
-                <div key={index} className= "flex flex-row rounded-lg py-2 px-2 text-[14px] border-[1.5px] leading-snug h-[80px]">                      
+                <div key={index} className= {`flex flex-row rounded-lg py-2 px-2 text-[14px] border-[1.5px] leading-snug h-[80px] ${demoSteps[1] ? `opacity-[30%]` : ``}`}>                      
                     <div className = "w-[200px] mx-[10px] my-auto">{item}</div>
                 </div>
             )
@@ -121,7 +121,6 @@ export default function Demo({ isDark, setIsDark }) {
 }
 
   const queryQuestion = async (event) => {
-    setDemoSteps([false, false, false, false])
     event.preventDefault();
     setShowPrompts(false);
     if (inputValue === "") {
@@ -144,6 +143,9 @@ export default function Demo({ isDark, setIsDark }) {
       console.log(conversationArr);
       setIsNew(false);
     }
+    setTimeout(() => {
+        setDemoSteps([false, false, false, true])
+    }, 1000);
   };
 
   useEffect(() => {
@@ -154,9 +156,15 @@ export default function Demo({ isDark, setIsDark }) {
     <div className="w-full h-[100vh]">
       <div className="w-full h-[100vh] absolute flex flex-col justify-between z-0">
         <div className="drop_shadow w-full flex items-center">
-          <button className="m-2" onClick={() => navigate("/")}>
-            <IoIosArrowDropleftCircle className="fill-black text-[30px]" />
-          </button>
+            <Popover
+                placement="right"
+                content={<div className="w-[400px]">"Good job, you've completed the demo. Thanks for trying out UniGPT! Click here to go back to the start page."</div>}
+                visible={demoSteps[3]}
+            >
+            <button className="m-2" onClick={() => navigate("/")}>
+                <IoIosArrowDropleftCircle className={`fill-black text-[30px] ${demoSteps[3] ? `animate-pulse` : ``}`} />
+            </button>
+          </Popover>
           <h6 className="text-2xl font-bold text-black text-center flex-grow">
             UniGPT
           </h6>
@@ -165,7 +173,7 @@ export default function Demo({ isDark, setIsDark }) {
             visible={demoSteps[0]}
             closable={false}
             footer={[
-                <Button key="back" className = "bg-black text-white border-white" onClick={handleStartDemo}>
+                <Button className = "bg-black text-white border-white animate-pulse border-none hover:text-white focus:text-white " style={{ color: "white"}} onClick={handleStartDemo}>
                   Start Demo
                 </Button>
             ]}
@@ -206,7 +214,7 @@ export default function Demo({ isDark, setIsDark }) {
                 <Popover
                     content={"Great! Now click this button to send it to the chatbot"}
                     visible={demoSteps[2]}>
-                    <RiArrowUpCircleFill className="text-[35px] mx-auto"/>
+                    <RiArrowUpCircleFill className={`text-[35px] mx-auto ${demoSteps[2] ? `animate-pulse`:``}`}/>
                 </Popover>
               )}
             </button>

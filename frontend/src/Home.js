@@ -109,7 +109,7 @@ export default function Home({ isDark, setIsDark }) {
           {isKeyLoading ? (
             <CircularProgress color="inherit" size={40} />
           ) : (
-            "Demo"
+            "Try Demo"
           )}
         </button>
 
