@@ -31,6 +31,8 @@ Created by [Sarina Li](https://github.com/sarinali), [Jacqueline Ho](https://git
 [![🤖 GPT](https://img.shields.io/badge/🤖%20GPT-darkgrey)](https://platform.openai.com/docs/guides/gpt)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 
+## Try out UniGPT!
+Link: https://universitygpt-43101.web.app/
 #### Other
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white)
 
