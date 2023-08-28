@@ -3,7 +3,11 @@ Introducing UniGPT: Your virtual assistant designed to answer all your questions
 
 Navigating the complexities of university life can be challenging and time-consuming, and that's where our chatbot steps in. Designed for students at the University of Waterloo, UniGPT is here to provide quick and personalized answers to all your questions. Whether you're seeking information about courses, campus resources, or just need some guidance on university survival tips, our chatbot is your go-to companion. With a deep understanding of the university's systems and an extensive knowledge base, our chatbot aims to streamline your academic journey, making it smoother, more informed, and more successful. Say goodbye to endless searching and hello to instant, tailored support with UniGPT!
 
-https://github.com/dourian/UniGPT/assets/75771131/4974d492-c7d6-48c1-913f-52a19e8f02ed
+
+
+https://github.com/dourian/UniGPT/assets/75771131/bb5b4df1-c373-40b7-ad29-ecd04ef3f803
+
+
 
 Created by Sarina Li, Jacqueline Ho, and Dorian Chen
 
