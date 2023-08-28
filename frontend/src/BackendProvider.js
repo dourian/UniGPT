@@ -8,10 +8,19 @@ export const BackendProvider = ({ children }) => {
   const [answer, setAnswer] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [validApiKey, setValidApiKey] = useState("")
-  const [prompts, setPrompts] = useState(["What are Waterloo’s admission averages?", "Tell me about Waterloo's residence options", "What are the degree requirements for Computer Science?", "What undergraduate programs are offered at Waterloo?", "List all the ENGL classes offered at Waterloo.", "How many engineering programs are at Waterloo?"])
+  const [validApiKey, setValidApiKey] = useState("");
+  const [prompts, setPrompts] = useState([
+    "What are Waterloo’s admission averages?",
+    "Tell me about Waterloo's residence options.",
+    "What are the degree requirements for Computer Science?",
+    "What undergraduate programs are offered at Waterloo?",
+    "Tell me about CS 135.",
+    "How many engineering programs are at Waterloo?",
+  ]);
 
   const getPrompts = (prompts) => {
+    return "hello";
+
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -25,10 +34,10 @@ export const BackendProvider = ({ children }) => {
     axios
       .request(config)
       .then((response) => {
-        console.log("response: ", response.data)
-        const ans = JSON.parse(JSON.stringify(response.data))
-        console.log("answer: ", ans)
-        return ans
+        console.log("response: ", response.data);
+        const ans = JSON.parse(JSON.stringify(response.data));
+        console.log("answer: ", ans);
+        return ans;
       })
       .catch((error) => {
         console.log(error);
@@ -36,11 +45,15 @@ export const BackendProvider = ({ children }) => {
   };
 
   const getAnswer = async (question) => {
+    setIsLoading(false);
+    setDisabledAsk("");
+    return "sample answer";
+
     try {
       setIsLoading(true);
-  
+
       console.log(isLoading);
-  
+
       let config = {
         method: "get",
         maxBodyLength: Infinity,
@@ -53,9 +66,9 @@ export const BackendProvider = ({ children }) => {
           key: validApiKey,
         },
       };
-  
+
       const response = await axios.request(config);
-  
+
       const ans = JSON.stringify(response.data).substr(1).slice(0, -1);
       setIsLoading(false);
       setDisabledAsk("");
@@ -68,27 +81,27 @@ export const BackendProvider = ({ children }) => {
 
   const setApiKey = async (key) => {
     let config = {
-      method: 'get',
+      method: "get",
       maxBodyLength: Infinity,
-      url: 'http://localhost:8000/initkey',
-      headers: { 
-        'Content-Type': 'application/json'
+      url: "http://localhost:8000/initkey",
+      headers: {
+        "Content-Type": "application/json",
       },
       params: {
         key: key,
       },
     };
-    
-    axios.request(config)
-    .then((response) => {
-      console.log(response.data.status)
-      return response.data.status
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
-  
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data.status);
+        return response.data.status;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const contextValue = useMemo(
     () => ({
@@ -100,12 +113,12 @@ export const BackendProvider = ({ children }) => {
       disabledAsk,
       setDisabledAsk,
       getPrompts,
-      prompts, 
+      prompts,
       setPrompts,
       inputValue,
       setInputValue,
       validApiKey,
-      setValidApiKey
+      setValidApiKey,
     }),
     [answer, isLoading, disabledAsk, validApiKey, inputValue]
   );

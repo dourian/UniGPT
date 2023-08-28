@@ -12,16 +12,22 @@ export default function Home({ isDark, setIsDark }) {
   const [isKeyLoading, setIsKeyLoading] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
 
-  useEffect(() => {
-    if (isValid) {
-      setValidApiKey(apiKeyInput);
-      navigate("/ask");
-    }
-  }, [isValid]);
+  // useEffect(() => {
+  //   if (isValid) {
+  //     setValidApiKey(apiKeyInput);
+  //     navigate("/ask");
+  //   }
+  // }, [isValid]);
 
-  const handleSubmit = (event) => {
+  const handleStart = (event) => {
     event.preventDefault();
-    checkApiKey();
+    navigate("/ask");
+    // checkApiKey();
+  };
+
+  const handleStartDemo = (event) => {
+    event.preventDefault();
+    navigate("/demo");
   };
 
   const handleChange = (event) => {
@@ -79,12 +85,13 @@ export default function Home({ isDark, setIsDark }) {
             ></input>
           </label>
         </form>
+        <div className= "flex items-center justify-center self-center gap-2">
         <button
           className={`${
             !isDark ? "dark" : "light"
           } text-sm rounded-lg px-4 py-2 mt-[100px] drop_shadow`}
           type="submit"
-          onClick={(e) => handleSubmit(e)}
+          onClick={(e) => handleStart(e)}
         >
           {isKeyLoading ? (
             <CircularProgress color="inherit" size={40} />
@@ -92,7 +99,21 @@ export default function Home({ isDark, setIsDark }) {
             "Start"
           )}
         </button>
-        <label></label>
+        <button
+          className={`${
+            !isDark ? "dark" : "light"
+          } text-sm rounded-lg px-4 py-2 mt-[100px] drop_shadow`}
+          type="submit"
+          onClick={(e) => handleStartDemo(e)}
+        >
+          {isKeyLoading ? (
+            <CircularProgress color="inherit" size={40} />
+          ) : (
+            "Demo"
+          )}
+        </button>
+
+        </div>
       </div>
     </div>
   );

@@ -5,13 +5,14 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { RiArrowUpCircleFill } from "react-icons/ri";
 import { BsThreeDots } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import Prompts from "./Prompts";
 import { Conversation } from "./components/Conversation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Modal, Button, Tooltip, Popover } from 'antd';
+import { IoSend } from "react-icons/io5";
 
-export default function Ask({ isDark, setIsDark }) {
+export default function Demo({ isDark, setIsDark }) {
   const {
     getAnswer,
     isLoading,
@@ -28,6 +29,8 @@ export default function Ask({ isDark, setIsDark }) {
   const [renderedConversation, setRenderedConversation] = useState([]);
   const [isNew, setIsNew] = useState(true);
   const [showPrompts, setShowPrompts] = useState(true);
+  const [demoSteps, setDemoSteps] = useState([true, false, false, false]);
+  
 
   const notify = () => toast("You cannot enter a blank question!");
 
@@ -42,6 +45,9 @@ export default function Ask({ isDark, setIsDark }) {
   //       navigate("/")
   //   }
   // },[validApiKey])
+  const handleStartDemo = () => {
+    setDemoSteps([false, true, false, false])
+  };
 
   useEffect(() => {
     let temp = [];
@@ -71,7 +77,51 @@ export default function Ask({ isDark, setIsDark }) {
     setInputValue(event.target.value);
   };
 
+  function Prompts () {
+    const {
+        getPrompts,
+        prompts,
+        setPrompts,
+        inputValue,
+        setInputValue
+    } = useContext(BackendContext);
+
+    const [hoveredPrompt, setHoveredPrompt] = useState()
+
+    const generatePrompt = async (item) => {
+        setDemoSteps([false, false, true, false])
+        setInputValue(item)
+    }
+    
+    return (
+        <div className="w-[500px] grid grid-cols-2 gap-x-[6px] gap-y-[6px] self-center text-black">
+            {prompts && prompts.map((item, index) => (
+               (index === 2 ?
+                <Popover
+                    content={"Hover over this prompt and click the send button!"}
+                    visible={demoSteps[1]}
+                >
+                        <div key={index} className= {demoSteps[1] ? "flex border-black flex-row transition-border-color ease-in-out transition-[900ms] rounded-lg py-2 px-2 text-[14px] border-[1.5px] leading-snug h-[80px]" : "flex flex-row transition-border-color ease-in-out  transition-[900ms] rounded-lg py-2 px-2 text-[14px] border-[1.5px] leading-snug h-[80px]"} onMouseEnter={() => setHoveredPrompt(item)} onMouseLeave={() => setHoveredPrompt()}>                      
+                            <div className = "w-[200px] mx-[10px] my-auto">{item}</div>
+                            <Tooltip title = "Click to send" className="">
+                                <button onClick={() => generatePrompt(item)} className = {hoveredPrompt === item? "w-[30px] h-[30px] my-auto text-[18px] opacity-1 transition-[1000ms] ease-in-out" : "w-[30px] h-[30px] my-auto text-[18px] opacity-0 transition-[1000ms] ease-in-out"} >
+                                    <IoSend/>
+                                </button>
+                            </Tooltip>
+                        </div>
+                </Popover>
+                :
+                <div key={index} className= "flex flex-row rounded-lg py-2 px-2 text-[14px] border-[1.5px] leading-snug h-[80px]">                      
+                    <div className = "w-[200px] mx-[10px] my-auto">{item}</div>
+                </div>
+            )
+            ))}
+        </div>
+    );
+}
+
   const queryQuestion = async (event) => {
+    setDemoSteps([false, false, false, false])
     event.preventDefault();
     setShowPrompts(false);
     if (inputValue === "") {
@@ -111,6 +161,17 @@ export default function Ask({ isDark, setIsDark }) {
             UniGPT
           </h6>
         </div>
+        <Modal
+            visible={demoSteps[0]}
+            closable={false}
+            footer={[
+                <Button key="back" className = "bg-black text-white border-white" onClick={handleStartDemo}>
+                  Start Demo
+                </Button>
+            ]}
+        >
+            <p>Welcome to UniGPT – Your virtual assistant designed to answer all your questions about the University of Waterloo! Want to try it out? Engage with the demo and let UniGPT guide you through the process!</p>
+        </Modal>
         {showPrompts? <Prompts /> :
         <div className="overflow-scroll flex item-start flex-col h-full">
           {renderedConversation}
@@ -142,7 +203,11 @@ export default function Ask({ isDark, setIsDark }) {
               {isLoading ? (
                 <CircularProgress color="inherit" size={40} />
               ) : (
-                <RiArrowUpCircleFill className="text-[35px] mx-auto" />
+                <Popover
+                    content={"Great! Now click this button to send it to the chatbot"}
+                    visible={demoSteps[2]}>
+                    <RiArrowUpCircleFill className="text-[35px] mx-auto"/>
+                </Popover>
               )}
             </button>
           </form>
