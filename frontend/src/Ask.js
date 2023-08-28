@@ -11,22 +11,18 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function Ask({ isDark, setIsDark }) {
+export default function Ask() {
   const {
     getAnswer,
     isLoading,
     disabledAsk,
     setDisabledAsk,
     validApiKey,
-    getPrompts, 
     inputValue,
     setInputValue,
-    prompts,
-    setPrompts
   } = useContext(BackendContext);
   const [conversationArr, setConversationArr] = useState([]);
   const [renderedConversation, setRenderedConversation] = useState([]);
-  const [isNew, setIsNew] = useState(true);
   const [showPrompts, setShowPrompts] = useState(true);
 
   const notify = () => toast("You cannot enter a blank question!");
@@ -37,11 +33,11 @@ export default function Ask({ isDark, setIsDark }) {
     bottomEl?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // useEffect(() => {
-  //   if (validApiKey == "") {
-  //       navigate("/")
-  //   }
-  // },[validApiKey])
+  useEffect(() => {
+    if (validApiKey == "") {
+      navigate("/");
+    }
+  }, [validApiKey]);
 
   useEffect(() => {
     let temp = [];
@@ -49,13 +45,17 @@ export default function Ask({ isDark, setIsDark }) {
       if (item.type === "user") {
         temp.push(
           <div className="bg-[#FFFFFF] border border-gray-300 h-fit">
-            <p className="text-right w-full pl-24 pr-10 text-lg pt-5 pb-5">{item.text}</p>
+            <p className="text-right w-full pl-24 pr-10 text-lg pt-5 pb-5">
+              {item.text}
+            </p>
           </div>
         );
       } else if (item.type === "bot") {
         temp.push(
           <div className="bg-[#F7F7F8] border border-gray-300 h-fit">
-            <p className="text-left w-full pl-10 pr-24 text-lg pt-5 pb-5">{item.text}</p>
+            <p className="text-left w-full pl-10 pr-24 text-lg pt-5 pb-5">
+              {item.text}
+            </p>
           </div>
         );
       }
@@ -91,8 +91,6 @@ export default function Ask({ isDark, setIsDark }) {
         ...prev,
         new Conversation("bot", ans),
       ]);
-      console.log(conversationArr);
-      setIsNew(false);
     }
   };
 
@@ -111,11 +109,14 @@ export default function Ask({ isDark, setIsDark }) {
             UniGPT
           </h6>
         </div>
-        {showPrompts? <Prompts /> :
-        <div className="overflow-scroll flex item-start flex-col h-full">
-          {renderedConversation}
-          <div ref={bottomEl}></div>
-        </div>}
+        {showPrompts ? (
+          <Prompts />
+        ) : (
+          <div className="overflow-scroll flex item-start flex-col h-full">
+            {renderedConversation}
+            <div ref={bottomEl}></div>
+          </div>
+        )}
         <div className="flex flex-row w-full mb-[10px] items-center justify-center gap-4">
           <button className="flex items-center align-center m-3">
             <BsThreeDots className="flex mx-auto fill-black text-[20px]" />

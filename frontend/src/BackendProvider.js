@@ -19,8 +19,6 @@ export const BackendProvider = ({ children }) => {
   ]);
 
   const getPrompts = (prompts) => {
-    return "hello";
-
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -45,10 +43,6 @@ export const BackendProvider = ({ children }) => {
   };
 
   const getAnswer = async (question) => {
-    setIsLoading(false);
-    setDisabledAsk("");
-    return "sample answer";
-
     try {
       setIsLoading(true);
 

@@ -3,7 +3,7 @@ import { BackendContext } from "./BackendProvider";
 import { IoSend } from "react-icons/io5";
 import { Tooltip } from 'antd';
 
-function Prompts () {
+export default function Prompts () {
     const {
         getPrompts,
         prompts,
@@ -33,4 +33,3 @@ function Prompts () {
         </div>
     );
 }
-export default Prompts;

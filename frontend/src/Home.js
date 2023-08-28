@@ -12,17 +12,16 @@ export default function Home({ isDark, setIsDark }) {
   const [isKeyLoading, setIsKeyLoading] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
 
-  // useEffect(() => {
-  //   if (isValid) {
-  //     setValidApiKey(apiKeyInput);
-  //     navigate("/ask");
-  //   }
-  // }, [isValid]);
+  useEffect(() => {
+    if (isValid) {
+      setValidApiKey(apiKeyInput);
+      navigate("/ask");
+    }
+  }, [isValid]);
 
   const handleStart = (event) => {
     event.preventDefault();
-    navigate("/ask");
-    // checkApiKey();
+    checkApiKey();
   };
 
   const handleStartDemo = (event) => {
@@ -36,7 +35,10 @@ export default function Home({ isDark, setIsDark }) {
   };
 
   const checkApiKey = async () => {
+    if (apiKeyInput == "") return;
+    
     setIsKeyLoading(true);
+
     const myHeaders = new Headers();
     myHeaders.append("key", apiKeyInput);
 
@@ -46,7 +48,10 @@ export default function Home({ isDark, setIsDark }) {
       redirect: "follow",
     };
 
-    await fetch("https://unigpt-c074044c0e9d.herokuapp.com/initkey", requestOptions)
+    await fetch(
+      "https://unigpt-c074044c0e9d.herokuapp.com/initkey",
+      requestOptions
+    )
       .then((response) => response.text())
       .then((result) => {
         setIsValid(result.includes("success"));
@@ -81,38 +86,32 @@ export default function Home({ isDark, setIsDark }) {
               value={apiKeyInput}
               onChange={handleChange}
               placeholder={"Enter your OpenAI API key"}
-              // disabled={disabledAsk}
             ></input>
           </label>
         </form>
-        <div className= "flex items-center justify-center self-center gap-2">
-        <button
-          className={`${
-            !isDark ? "dark" : "light"
-          } text-sm rounded-lg px-4 py-2 mt-[100px] drop_shadow`}
-          type="submit"
-          onClick={(e) => handleStart(e)}
-        >
-          {isKeyLoading ? (
-            <CircularProgress color="inherit" size={40} />
-          ) : (
-            "Start"
-          )}
-        </button>
-        <button
-          className={`${
-            !isDark ? "dark" : "light"
-          } text-sm rounded-lg px-4 py-2 mt-[100px] drop_shadow`}
-          type="submit"
-          onClick={(e) => handleStartDemo(e)}
-        >
-          {isKeyLoading ? (
-            <CircularProgress color="inherit" size={40} />
-          ) : (
-            "Try Demo"
-          )}
-        </button>
-
+        <div className="flex items-center justify-center self-center gap-2">
+          <button
+            className={`${
+              !isDark ? "dark" : "light"
+            } text-sm rounded-lg px-4 py-2 mt-[100px] drop_shadow`}
+            type="submit"
+            onClick={(e) => handleStart(e)}
+          >
+            {isKeyLoading ? (
+              <CircularProgress color="inherit" size={40} />
+            ) : (
+              "Start"
+            )}
+          </button>
+          <button
+            className={`${
+              !isDark ? "dark" : "light"
+            } text-sm rounded-lg px-4 py-2 mt-[100px] drop_shadow`}
+            type="submit"
+            onClick={(e) => handleStartDemo(e)}
+          >
+            {"Try Demo"}
+          </button>
         </div>
       </div>
     </div>
