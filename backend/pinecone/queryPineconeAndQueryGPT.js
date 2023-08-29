@@ -44,7 +44,7 @@ const queryPineconeVectorStoreAndQueryLLM = async (
   // match query to answer
   if (queryResponse.matches.length) {
     const llm = new OpenAI({
-      openAIApiKey: process.env.OPEN_API_KEY,
+      openAIApiKey: openAiKey,
       streaming: true,
     });
 
