@@ -66,8 +66,8 @@ app.get("/ask", jsonParser, async (req, res) => {
     });
 
     // fetch data from json
-    const question = req.body.question || req.query.question || "";
-    const key = req.body.key || req.query.key || "";
+    const question = req.body.question || req.query.question || req.headers.question || "";
+    const key = req.body.key || req.query.key || req.headers.key || "";
 
     // handle empty question
     if (question === "" || question === null) {
