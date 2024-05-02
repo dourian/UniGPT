@@ -7,7 +7,7 @@ import streamAnswerGPT from "../controller/streamanswer.js";
 
 /**
  * Queries the Pinecone database for the nearest matches and returns as a string
- * 
+ *
  * @param {PineConeClient} client Pinecone Client
  * @param {string} indexName Name of the Pinecone index
  * @param {string} question The question to be queried
@@ -22,13 +22,13 @@ const queryPineconeVectorStoreAndQueryLLM = async (
   question,
   response,
   streamTrue,
-  openAiKey
+  openAiKey,
 ) => {
   const index = client.Index(indexName);
 
   // create embeddings
   const queryEmbedding = await new OpenAIEmbeddings({
-    openAIApiKey: openAiKey,
+    openAIApiKey: process.env.OPEN_API_KEY,
   }).embedQuery(question);
 
   // query question
@@ -44,21 +44,22 @@ const queryPineconeVectorStoreAndQueryLLM = async (
   // match query to answer
   if (queryResponse.matches.length) {
     const llm = new OpenAI({
-      openAIApiKey: openAiKey,
-      streaming: true,
+      openAIApiKey: process.env.OPEN_API_KEY,
+      // streaming: true,
+      modelName: "gpt-3.5-turbo-16k-0613",
     });
 
     // STREAMING CALLBACKS, UNDER WORK RIGHT NOW!!
-    if (streamTrue) {
-      llm.callbacks = [
-        {
-          handleLLMNewToken(token) {
-            console.log(token);
-            streamAnswerGPT(response, token);
-          },
-        },
-      ];
-    }
+    // if (streamTrue) {
+    //   llm.callbacks = [
+    //     {
+    //       handleLLMNewToken(token) {
+    //         console.log(token);
+    //         streamAnswerGPT(response, token);
+    //       },
+    //     },
+    //   ];
+    // }
 
     const chain = loadQAStuffChain(llm);
 
@@ -83,4 +84,4 @@ const queryPineconeVectorStoreAndQueryLLM = async (
   }
 };
 
-export default queryPineconeVectorStoreAndQueryLLM
+export default queryPineconeVectorStoreAndQueryLLM;
