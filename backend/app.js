@@ -66,7 +66,8 @@ app.get("/ask", jsonParser, async (req, res) => {
     });
 
     // fetch data from json
-    const question = req.body.question || req.query.question || req.headers.question || "";
+    const question =
+      req.body.question || req.query.question || req.headers.question || "";
     const key = req.body.key || req.query.key || req.headers.key || "";
 
     // handle empty question
@@ -74,7 +75,7 @@ app.get("/ask", jsonParser, async (req, res) => {
       res.send("Data is not in the right format, try again.");
     }
 
-    const useStream = true;
+    const useStream = false;
     const prePrompt =
       "You are going to act as an advisor for the University of Waterloo. I will ask you a question, and I want you to answer it to the best of you abilities. Here is the question: ";
     // query and send answer
@@ -86,7 +87,7 @@ app.get("/ask", jsonParser, async (req, res) => {
       promptedQuestion,
       res,
       useStream,
-      key
+      key,
     );
 
     if (!useStream) res.send(answer);

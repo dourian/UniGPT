@@ -4,15 +4,15 @@ import { TextLoader } from "langchain/document_loaders/fs/text";
 import * as dotenv from "dotenv";
 import queryPineconeVectorStoreAndQueryLLM from "./pinecone/queryPineconeAndQueryGPT.js";
 import updatePinecone from "./pinecone/updatePinecone.js";
-import createPineconeIndex from "./pinecone/createPineconeIndex.js"
+import createPineconeIndex from "./pinecone/createPineconeIndex.js";
 
-dotenv.config()
+dotenv.config();
 
 // configs
 const indexName = "unigpt";
 const vectorDimension = 1536;
 const loader = new DirectoryLoader("./documents", {
-  ".txt": (path) => new TextLoader(path)
+  ".txt": (path) => new TextLoader(path),
 });
 const docs = await loader.load();
 const client = new PineconeClient();
@@ -21,21 +21,25 @@ const client = new PineconeClient();
  * Initializes Pinecone client in main
  */
 async function init() {
-  
   await client.init({
     apiKey: process.env.PINECONE_API_KEY,
     environment: process.env.PINECONE_ENVIRONMENT,
   });
 }
 
-// IMPORTANT: run init, update and query from entry point 
+// IMPORTANT: run init, update and query from entry point
 (async () => {
-  await init()
+  await init();
 
   // await createPineconeIndex(client, indexName, vectorDimension);
 
   await updatePinecone(client, indexName, docs);
 
-  // await queryPineconeVectorStoreAndQueryLLM(client, indexName, "What is love?", null, false);
+  // await queryPineconeVectorStoreAndQueryLLM(
+  //   client,
+  //   indexName,
+  //   "What is love?",
+  //   null,
+  //   false,
+  // );
 })();
-
